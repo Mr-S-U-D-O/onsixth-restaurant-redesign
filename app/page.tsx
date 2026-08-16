@@ -99,7 +99,7 @@ function Hero() {
           className="text-heading-hero"
           style={{
             color: "var(--obsidian)",
-            fontSize: "clamp(3.5rem, 10vw, 8rem)",
+            fontSize: "clamp(2.5rem, 12vw, 8rem)",
             lineHeight: 0.95,
             letterSpacing: "-0.03em",
             maxWidth: "100%",
@@ -283,7 +283,7 @@ function CulinaryCascade() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "var(--space-10)",
               alignItems: "center",
             }}
@@ -350,7 +350,7 @@ function CulinaryCascade() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
               gap: "var(--space-10)",
               alignItems: "center",
             }}
@@ -443,13 +443,11 @@ function OpenKitchenTheatre() {
     >
       <div className="container">
         <div
+          className="grid-cols-responsive kitchen-grid"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
             gap: "var(--space-12)",
             alignItems: "center",
           }}
-          className="kitchen-grid"
         >
           {/* Text Content */}
           <motion.div
@@ -517,7 +515,7 @@ function OpenKitchenTheatre() {
             }}
           >
             <Image
-              src="/hero_fire_kitchen_1786904491778.jpg"
+              src="/hero_fire_kitchen.jpg"
               alt="Open kitchen roaring fire"
               fill
               style={{ objectFit: "cover", filter: "contrast(115%) saturate(110%)" }}

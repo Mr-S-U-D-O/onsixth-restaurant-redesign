@@ -87,7 +87,7 @@ export default function ExperiencePage() {
       {/* Asymmetrical Bento Grid */}
       <section style={{ background: 'var(--bg-secondary)', padding: 'var(--space-24) 0', borderBottom: '1px solid var(--border)' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-10)' }}>
+          <div className="grid-cols-responsive" style={{ gap: 'var(--space-10)' }}>
             
             {/* Card 1 */}
             <div style={{ 

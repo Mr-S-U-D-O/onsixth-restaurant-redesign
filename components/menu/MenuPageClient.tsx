@@ -192,6 +192,7 @@ function HoverImagePreview({ activeItem, mousePos }: { activeItem: string | null
 
   return (
     <motion.div
+      className="hidden-mobile"
       style={{
         position: 'fixed',
         top: 0,
@@ -336,7 +337,7 @@ export default function MenuPageClient() {
 
       {/* Menu Categories */}
       <div className="container" style={{ paddingBlock: 'var(--space-16)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 250px) 1fr', gap: 'var(--space-16)', alignItems: 'start' }}>
+        <div className="grid-sidebar-responsive">
           
           {/* Sticky Sidebar */}
           <aside style={{ position: 'sticky', top: '160px', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -375,7 +376,7 @@ export default function MenuPageClient() {
                   {cat.description && <p style={{ fontSize: 'var(--text-lg)', color: 'var(--slate-mid)', maxWidth: '600px' }}>{cat.description}</p>}
                 </header>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 'var(--space-x) var(--space-16)', columnGap: 'var(--space-16)', rowGap: 'var(--space-8)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 'var(--space-x) var(--space-16)', columnGap: 'var(--space-16)', rowGap: 'var(--space-8)' }}>
                   {cat.items.map((item) => (
                     <article 
                       key={item.id} 

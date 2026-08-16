@@ -69,12 +69,10 @@ export default function ContactPage() {
 
       {/* Main content */}
       <div
-        className="container"
+        className="container grid-cols-responsive"
         style={{
           paddingBlock: 'var(--space-24)',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 'var(--space-12)',
+          gap: 'var(--space-16)',
           alignItems: 'start',
         }}
       >

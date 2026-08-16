@@ -107,7 +107,7 @@ export default function Navbar() {
               aria-label="On Sixth Restaurant — Home"
               style={{ display: 'flex', alignItems: 'center', height: scrolled ? '36px' : '64px', position: 'relative', zIndex: 10, transition: 'height var(--ease-normal)' }}
             >
-              <img src="/logo.jpg" alt="" aria-hidden="true" style={{ height: '100%', width: 'auto', objectFit: 'contain' }} />
+              <img src="/image.png_2K_202608170023-removebg-preview.png" alt="" aria-hidden="true" style={{ height: '100%', width: 'auto', objectFit: 'contain' }} />
             </Link>
 
             {/* Desktop Nav */}
@@ -180,7 +180,7 @@ export default function Navbar() {
       >
         {/* Mobile logo + close */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-12)' }}>
-          <img src="/logo.svg" alt="" aria-hidden="true" style={{ height: '40px', width: 'auto' }} />
+          <img src="/image.png_2K_202608170023-removebg-preview.png" alt="" aria-hidden="true" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
           <button
             onClick={() => setMobileOpen(false)}
             aria-label="Close menu"
