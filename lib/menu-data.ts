@@ -20,6 +20,7 @@ export interface MenuItem {
   tags?: DietaryTag[];
   chefNotes?: string;
   wineParingNote?: string;
+  image?: string;          // Direct image URL for hover reveal & modal
   imagePlaceholder?: string; // Alt text for generated image
 }
 
@@ -49,6 +50,7 @@ export const menuData: MenuCategory[] = [
         price: '145.00',
         tags: ['chef-pick', 'gluten-free'],
         chefNotes: "Our most-ordered starter — the smoky chorizo against the squeaky halloumi is a flavour contrast we're proud of.",
+        image: '/dishes/on-sixth-skewers.jpg',
         imagePlaceholder: 'Grilled skewers with halloumi, chorizo and peppadews on a dark slate board',
       },
       {
@@ -58,6 +60,7 @@ export const menuData: MenuCategory[] = [
           'Wood-fired ciabatta with heirloom tomato & basil, whipped ricotta & honey, and avocado & seed mix',
         price: '95.00',
         tags: ['vegetarian'],
+        image: '/dishes/bruschetta.jpg',
         imagePlaceholder: 'Three pieces of bruschetta with colourful toppings on a wooden board',
       },
       {
@@ -67,6 +70,7 @@ export const menuData: MenuCategory[] = [
           'Lightly dusted rings with lemon aioli and fresh chilli',
         price: '115.00',
         tags: ['chef-pick'],
+        image: '/dishes/calamari.jpg',
         imagePlaceholder: 'Golden calamari rings with aioli dip and lemon wedge',
       },
     ],
@@ -90,6 +94,7 @@ export const menuData: MenuCategory[] = [
         tags: ['chef-pick', 'gluten-free'],
         chefNotes: 'Slice, stack, savour. Built to impress and disappear fast — our signature dish.',
         wineParingNote: 'Pairs beautifully with a crisp Sauvignon Blanc from Stellenbosch.',
+        image: '/dishes/salmon-sashimi-tower.jpg',
         imagePlaceholder: 'Elegant salmon sashimi tower with avocado and tobiko on black slate',
       },
       {
@@ -99,6 +104,7 @@ export const menuData: MenuCategory[] = [
           'Crab sticks, avocado & cucumber, rolled in toasted sesame seeds',
         price: '115.00',
         tags: ['gluten-free'],
+        image: '/dishes/california-roll.jpg',
         imagePlaceholder: 'Eight California rolls garnished with sesame seeds on a white plate',
       },
       {
@@ -108,6 +114,7 @@ export const menuData: MenuCategory[] = [
           'Freshly diced tuna, sriracha mayo, spring onion & crispy shallots',
         price: '135.00',
         tags: ['spicy', 'gluten-free'],
+        image: '/dishes/spicy-tuna-roll.jpg',
         imagePlaceholder: 'Spicy tuna rolls with sriracha drizzle and spring onion garnish',
       },
       {
@@ -117,6 +124,7 @@ export const menuData: MenuCategory[] = [
           'California roll base topped with alternating salmon, tuna & avocado slices',
         price: '155.00',
         tags: ['chef-pick', 'gluten-free'],
+        image: '/dishes/rainbow-roll.jpg',
         imagePlaceholder: 'Colourful rainbow roll with alternating fish and avocado toppings',
       },
       {
@@ -125,6 +133,7 @@ export const menuData: MenuCategory[] = [
         description: 'Hand-pressed sushi rice topped with fresh Norwegian salmon',
         price: '98.00',
         tags: ['gluten-free'],
+        image: '/dishes/salmon-nigiri.jpg',
         imagePlaceholder: 'Four pieces of salmon nigiri with wasabi on the side',
       },
       {
@@ -135,6 +144,7 @@ export const menuData: MenuCategory[] = [
         price: '225.00',
         tags: ['chef-pick', 'gluten-free'],
         chefNotes: 'Sliced to order. A showcase of what our open kitchen does best.',
+        image: '/dishes/sashimi-platter.jpg',
         imagePlaceholder: 'Elegant mixed sashimi platter with garnish on dark ceramic',
       },
     ],
@@ -158,6 +168,7 @@ export const menuData: MenuCategory[] = [
         price: '168.00',
         tags: ['chef-pick'],
         chefNotes: 'Sweet, salty, smoky — the most romanticised pizza in Benoni.',
+        image: '/dishes/fig-prosciutto.jpg',
         imagePlaceholder: 'Oblong wood-fired pizza with fig, prosciutto and mozzarella on slate',
       },
       {
@@ -167,6 +178,7 @@ export const menuData: MenuCategory[] = [
           'Garlic cream base, fior di latte, heirloom cherry tomatoes, fresh basil & EVOO drizzle',
         price: '135.00',
         tags: ['vegetarian', 'vegan'],
+        image: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Classic white margherita pizza with fresh basil and cherry tomatoes',
       },
       {
@@ -176,6 +188,7 @@ export const menuData: MenuCategory[] = [
           'Smoky BBQ base, grilled chicken strips, creamy avocado, caramelised onion & jalapeño',
         price: '155.00',
         tags: ['spicy'],
+        image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'BBQ chicken pizza with avocado slices and jalapeño',
       },
       {
@@ -185,6 +198,7 @@ export const menuData: MenuCategory[] = [
           'Fior di latte, gorgonzola, pecorino romano & aged parmesan with truffle honey drizzle',
         price: '158.00',
         tags: ['vegetarian', 'chef-pick'],
+        image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Four-cheese pizza with truffle honey drizzle on rustic board',
       },
       {
@@ -194,6 +208,7 @@ export const menuData: MenuCategory[] = [
           'Rich tomato base, double layer cupped pepperoni, fior di latte & chilli oil finish',
         price: '148.00',
         tags: ['spicy', 'chef-pick'],
+        image: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Loaded double pepperoni pizza with cupped pepperoni and chilli oil',
       },
       {
@@ -203,6 +218,7 @@ export const menuData: MenuCategory[] = [
           'Vegan cream base, roasted courgette, red pepper, artichoke, olives & dukkah crust',
         price: '138.00',
         tags: ['vegan', 'gluten-free'],
+        image: 'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Colourful roasted vegetable pizza with dukkah herb crust',
       },
     ],
@@ -225,6 +241,7 @@ export const menuData: MenuCategory[] = [
         price: '295.00',
         tags: ['gluten-free', 'chef-pick'],
         chefNotes: 'We recommend medium-rare for maximum flavour retention.',
+        image: 'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Thick sirloin steak with char marks, served with chips and sauce',
       },
       {
@@ -234,6 +251,7 @@ export const menuData: MenuCategory[] = [
           'Al-dente penne, fire-roasted tomato, garlic, fresh chilli & parmesan shavings',
         price: '118.00',
         tags: ['vegetarian', 'spicy'],
+        image: 'https://images.unsplash.com/photo-1621996346565-e3d5d62817ee?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Pasta arrabiata with parmesan shavings in a dark ceramic bowl',
       },
       {
@@ -244,6 +262,7 @@ export const menuData: MenuCategory[] = [
         price: '245.00',
         tags: ['gluten-free', 'chef-pick'],
         wineParingNote: 'Excellent with an unoaked Chardonnay or crisp Rosé.',
+        image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Pan-seared salmon fillet with lemon butter and spinach',
       },
     ],
@@ -265,6 +284,7 @@ export const menuData: MenuCategory[] = [
           'Classic SA malva with salted caramel sauce, vanilla bean ice cream & candied pecan',
         price: '78.00',
         tags: ['vegetarian', 'chef-pick'],
+        image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Warm malva pudding with caramel sauce and ice cream in dark bowl',
       },
       {
@@ -274,6 +294,7 @@ export const menuData: MenuCategory[] = [
           'Warm 70% cacao fondant with molten centre, served with Oreo crumb & mascarpone',
         price: '88.00',
         tags: ['vegetarian'],
+        image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Chocolate lava cake with molten centre pouring onto plate',
       },
       {
@@ -283,6 +304,7 @@ export const menuData: MenuCategory[] = [
           'Baked Philadelphia cream cheese, berry compote & crushed amaretti base',
         price: '82.00',
         tags: ['vegetarian'],
+        image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'New York cheesecake slice with berry compote on white plate',
       },
     ],
@@ -301,6 +323,7 @@ export const menuData: MenuCategory[] = [
         name: 'Rock Shandy',
         price: '50.00',
         tags: ['vegan'],
+        image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Rock shandy in a tall glass with ice and lemon',
       },
       {
@@ -314,6 +337,7 @@ export const menuData: MenuCategory[] = [
           { name: 'Granadilla Crush',    price: '52.00' },
           { name: 'Mango Crush',         price: '52.00' },
         ],
+        image: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Colourful fruit crushes in glasses with fresh fruit garnish',
       },
       {
@@ -322,6 +346,7 @@ export const menuData: MenuCategory[] = [
         description: 'Ask your server for today\'s featured zero-proof creation',
         price: '65.00',
         tags: ['vegan'],
+        image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Elegant mocktail in a coupe glass with fresh herbs',
       },
     ],
@@ -344,6 +369,7 @@ export const menuData: MenuCategory[] = [
         price: '115.00',
         tags: ['chef-pick'],
         chefNotes: 'Our house Limoncello — a labour of love, steeped for 30 days.',
+        image: 'https://images.unsplash.com/photo-1560512823-829485b8bf24?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Limoncello spritz cocktail in a wine glass with fresh lemon and mint',
       },
       {
@@ -351,6 +377,7 @@ export const menuData: MenuCategory[] = [
         name: 'Classic Negroni',
         description: 'Gin, Campari & sweet vermouth stirred over a large ice block',
         price: '125.00',
+        image: 'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Dark red Negroni in a rocks glass with orange peel garnish',
       },
       {
@@ -359,6 +386,7 @@ export const menuData: MenuCategory[] = [
         description: 'White rum, fresh lime, passionfruit pulp, mint & soda',
         price: '115.00',
         tags: ['spicy'],
+        image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Passion fruit mojito in a highball glass with mint and lime',
       },
       {
@@ -366,6 +394,7 @@ export const menuData: MenuCategory[] = [
         name: 'House Red Wine (Glass)',
         description: 'Rotating selection from South Africa\'s premier wine estates',
         price: '68.00',
+        image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Deep red wine in an elegant glass',
       },
       {
@@ -373,6 +402,7 @@ export const menuData: MenuCategory[] = [
         name: 'House White Wine (Glass)',
         description: 'Crisp Sauvignon Blanc or Chardonnay — ask your server',
         price: '65.00',
+        image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=800&q=80',
         imagePlaceholder: 'Chilled white wine in an elegant glass',
       },
     ],
@@ -389,7 +419,7 @@ export function filterByTag(tag: DietaryTag): MenuItem[] {
   return getAllMenuItems().filter((item) => item.tags?.includes(tag));
 }
 
-// ── Helper: Get category by ID ──
+// ── Helper: Get category by ID 
 export function getCategoryById(id: string): MenuCategory | undefined {
   return menuData.find((cat) => cat.id === id);
 }

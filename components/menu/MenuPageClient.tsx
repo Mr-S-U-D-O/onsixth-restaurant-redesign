@@ -120,6 +120,21 @@ function DishModal({
           {categoryName}
         </div>
 
+        {item.image && (
+          <div 
+            style={{ 
+              width: '100%', 
+              height: '220px', 
+              backgroundImage: `url('${item.image}')`, 
+              backgroundSize: 'cover', 
+              backgroundPosition: 'center', 
+              borderRadius: '4px',
+              marginBottom: 'var(--space-6)',
+              border: '1px solid var(--border)'
+            }} 
+          />
+        )}
+
         <h2 id="dish-modal-title" style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-3xl)', color: 'var(--obsidian)', marginBottom: 'var(--space-4)' }}>
           {item.name}
         </h2>
@@ -182,13 +197,10 @@ function DishModal({
 }
 
 // ── Hover Image Preview ─────────────────────────────────────────
-function HoverImagePreview({ activeItem, mousePos }: { activeItem: string | null, mousePos: { x: number, y: number } }) {
+function HoverImagePreview({ activeItem, mousePos }: { activeItem: MenuItem | null, mousePos: { x: number, y: number } }) {
   if (!activeItem) return null;
   
-  // We use placeholder images based on category or item if possible, fallback to hero_fire
-  let bgImg = '/hero_fire.jpg';
-  if (activeItem.includes('sushi') || activeItem.includes('salmon')) bgImg = '/premium_sushi_1786904503100.jpg';
-  if (activeItem.includes('pizza') || activeItem.includes('pizzaladiere')) bgImg = '/premium_pizza_1786904516168.jpg';
+  const bgImg = activeItem.image || '/hero_fire_kitchen.jpg';
 
   return (
     <motion.div
@@ -199,25 +211,54 @@ function HoverImagePreview({ activeItem, mousePos }: { activeItem: string | null
         left: 0,
         pointerEvents: 'none',
         zIndex: 100,
-        width: '240px',
-        height: '300px',
-        borderRadius: '4px',
-        backgroundImage: `url('${bgImg}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        width: '260px',
+        height: '320px',
+        borderRadius: '8px',
+        overflow: 'hidden',
         border: '1px solid var(--border)',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.2)'
+        boxShadow: '0 24px 48px rgba(0,0,0,0.22)',
+        background: 'var(--obsidian)'
       }}
       animate={{
-        x: mousePos.x + 20,
-        y: mousePos.y + 20,
-        opacity: activeItem ? 1 : 0,
-        scale: activeItem ? 1 : 0.9,
-        rotate: activeItem ? (mousePos.x % 10 - 5) : 0 // subtle tilt
+        x: mousePos.x + 24,
+        y: mousePos.y - 120,
+        opacity: 1,
+        scale: 1,
+        rotate: ((mousePos.x % 20) - 10) * 0.2
       }}
-      initial={{ opacity: 0, scale: 0.9, rotate: 0 }}
-      transition={{ type: 'spring', damping: 25, stiffness: 250, mass: 0.5 }}
-    />
+      initial={{ opacity: 0, scale: 0.9 }}
+      transition={{ type: 'spring', damping: 25, stiffness: 280, mass: 0.4 }}
+    >
+      <div 
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url('${bgImg}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          position: 'relative'
+        }}
+      >
+        <div 
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: 'var(--space-4)',
+            background: 'linear-gradient(to top, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.4) 60%, transparent 100%)',
+            color: 'var(--cream)'
+          }}
+        >
+          <div style={{ fontSize: 'var(--text-xs)', color: 'var(--teal)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', fontWeight: 600 }}>
+            {activeItem.price ? `R${activeItem.price}` : 'Artisanal Selection'}
+          </div>
+          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>
+            {activeItem.name}
+          </div>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -227,7 +268,7 @@ export default function MenuPageClient() {
   const [activeFilters, setActiveFilters] = useState<Set<DietaryTag>>(new Set());
   const [selectedDish, setSelectedDish] = useState<{ item: MenuItem; cat: string } | null>(null);
   
-  const [hoverItem, setHoverItem] = useState<string | null>(null);
+  const [hoverDish, setHoverDish] = useState<MenuItem | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -383,8 +424,8 @@ export default function MenuPageClient() {
                       style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}
                       onClick={(e) => { triggerRef.current = e.currentTarget; setSelectedDish({ item, cat: cat.name }); }}
                       onKeyDown={(e) => { if (e.key === 'Enter') { triggerRef.current = e.currentTarget; setSelectedDish({ item, cat: cat.name }); } }}
-                      onPointerEnter={() => setHoverItem(item.name.toLowerCase())}
-                      onPointerLeave={() => setHoverItem(null)}
+                      onPointerEnter={() => setHoverDish(item)}
+                      onPointerLeave={() => setHoverDish(null)}
                       tabIndex={0}
                       role="button"
                       aria-label={`View details for ${item.name}`}
@@ -429,8 +470,8 @@ export default function MenuPageClient() {
         />
       )}
       
-      {/* We need framer-motion imported for HoverImagePreview to work without error. I will use a trick below or fix imports if needed. */}
-      {hoverItem && <HoverImagePreview activeItem={hoverItem} mousePos={mousePos} />}
+      {/* Floating Hover Image Preview */}
+      <HoverImagePreview activeItem={hoverDish} mousePos={mousePos} />
     </div>
   );
 }
