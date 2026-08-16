@@ -289,3 +289,25 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ── Global Text Highlight ── */
+.text-highlight {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.text-highlight::before {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: -2%;
+  width: 104%;
+  height: 40%;
+  background-color: var(--teal);
+  opacity: 0.15;
+  z-index: -1;
+  transform: rotate(-1deg);
+  border-radius: 1px;
+}

@@ -218,36 +218,70 @@ export default function MenuPageClient() {
 
   return (
     <>
-      {/* Filters (Sticky below nav) */}
-      <div style={{ position: 'sticky', top: '72px', zIndex: 'var(--z-raised)' as never, background: 'rgba(252,252,252,0.95)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)', paddingBlock: 'var(--space-3)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', gap: 'var(--space-3)', overflowX: 'auto', scrollbarWidth: 'none', alignItems: 'center' }}>
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--slate-mid)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)' }}>Filters:</span>
-            {FILTERS.map(f => (
-              <button
-                key={f.tag}
-                onClick={() => toggleFilter(f.tag)}
-                aria-pressed={activeFilters.has(f.tag)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-2) var(--space-4)',
-                  border: `1px solid ${activeFilters.has(f.tag) ? 'var(--obsidian)' : 'var(--border)'}`,
-                  background: activeFilters.has(f.tag) ? 'var(--obsidian)' : 'transparent',
-                  color: activeFilters.has(f.tag) ? 'var(--cream)' : 'var(--slate-mid)',
-                  fontSize: 'var(--text-sm)',
-                  transition: 'all 0.2s',
-                  whiteSpace: 'nowrap'
-                }}
+      {/* Editorial Filter Block */}
+      <div className="container" style={{ paddingTop: 'var(--space-20)', paddingBottom: 'var(--space-8)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--space-8)' }}>
+           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 0.9, letterSpacing: '-0.02em', color: 'var(--obsidian)', margin: 0 }}>
+             Curate<br/>Your <span className="text-highlight">Palate.</span>
+           </h2>
+           {activeFilters.size > 0 && (
+              <button 
+                onClick={() => setActiveFilters(new Set())} 
+                style={{ fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', color: 'var(--obsidian)', borderBottom: '1px solid var(--obsidian)', paddingBottom: '2px', transition: 'opacity 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.opacity = '0.6'}
+                onMouseLeave={e => e.currentTarget.style.opacity = '1'}
               >
-                {activeFilters.has(f.tag) && <Check size={14} />} {f.label}
+                Clear Filters
               </button>
-            ))}
-            {activeFilters.size > 0 && (
-              <button onClick={() => setActiveFilters(new Set())} style={{ fontSize: 'var(--text-sm)', color: 'var(--slate-mid)', textDecoration: 'underline', marginLeft: 'var(--space-4)' }}>Clear</button>
             )}
-          </div>
+        </div>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '1px', background: 'var(--border)', border: '1px solid var(--border)' }}>
+          {FILTERS.map(f => (
+            <button
+              key={f.tag}
+              onClick={() => toggleFilter(f.tag)}
+              aria-pressed={activeFilters.has(f.tag)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                padding: 'var(--space-5)',
+                background: activeFilters.has(f.tag) ? 'var(--obsidian)' : 'var(--bg-primary)',
+                color: activeFilters.has(f.tag) ? 'var(--cream)' : 'var(--obsidian)',
+                transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                minHeight: '120px',
+                textAlign: 'left',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                if (!activeFilters.has(f.tag)) {
+                  e.currentTarget.style.background = 'var(--bg-secondary)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!activeFilters.has(f.tag)) {
+                  e.currentTarget.style.background = 'var(--bg-primary)';
+                }
+              }}
+            >
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                width: '100%', 
+                color: activeFilters.has(f.tag) ? 'var(--teal)' : 'var(--slate-mid)',
+                marginBottom: 'var(--space-6)'
+              }}>
+                <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: 'var(--tracking-widest)' }}>{f.abbr}</span>
+                {activeFilters.has(f.tag) && <Check size={16} />}
+              </div>
+              <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 500, letterSpacing: '-0.01em' }}>
+                {f.label}
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
