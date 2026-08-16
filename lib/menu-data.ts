@@ -48,7 +48,7 @@ export const menuData: MenuCategory[] = [
           'Grilled halloumi, chorizo sausage, whole peppadews & balsamic glaze on wood skewers',
         price: '145.00',
         tags: ['chef-pick', 'gluten-free'],
-        chefNotes: 'Our most-ordered starter — the smoky chorizo against the squeaky halloumi is a flavour contrast we're proud of.',
+        chefNotes: "Our most-ordered starter — the smoky chorizo against the squeaky halloumi is a flavour contrast we're proud of.",
         imagePlaceholder: 'Grilled skewers with halloumi, chorizo and peppadews on a dark slate board',
       },
       {

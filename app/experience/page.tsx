@@ -265,18 +265,6 @@ export default function ExperiencePage() {
         </div>
       </section>
 
-      {/* Responsive fix */}
-      <style jsx>{`
-        @media (max-width: 900px) {
-          div[style*="grid-template-columns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
-          }
-          div[style*="border-right"] {
-            border-right: none !important;
-            border-bottom: 1px solid var(--border) !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

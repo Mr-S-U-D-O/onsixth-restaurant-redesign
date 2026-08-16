@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 const REVIEWS = [
   {
-    text: 'Honestly the best date night spot in Benoni. The Salmon Sashimi Tower is out of this world — I've been 6 times and it never disappoints.',
+    text: "Honestly the best date night spot in Benoni. The Salmon Sashimi Tower is out of this world — I've been 6 times and it never disappoints.",
     author: 'Megan R.',
     platform: 'Google Reviews',
     stars: 5,

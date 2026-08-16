@@ -201,13 +201,6 @@ export default function ContactPage() {
       </div>
 
       {/* Responsive stacking */}
-      <style jsx>{`
-        @media (max-width: 900px) {
-          .container > div {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </>
   );
 }

@@ -281,3 +281,27 @@
 .skip-link:focus {
   top: var(--space-4);
 }
+
+/* ── Responsive: Contact page two-col grid ── */
+@media (max-width: 900px) {
+  .contact-page-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .experience-split {
+    grid-template-columns: 1fr !important;
+  }
+
+  .experience-split > div:first-child {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .experience-timeline-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .kitchen-split {
+    grid-template-columns: 1fr !important;
+  }
+}

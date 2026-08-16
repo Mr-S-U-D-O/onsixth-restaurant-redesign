@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'On Sixth Restaurant' }],
   creator: 'On Sixth Restaurant',
   openGraph: {
-    type: 'restaurant.restaurant',
+    type: 'website',
     locale: 'en_ZA',
     url: 'https://onsixthrestaurant.co.za',
     siteName: 'On Sixth Restaurant',

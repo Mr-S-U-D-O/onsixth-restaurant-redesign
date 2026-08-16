@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { Phone, Mail, MapPin, Clock, MessageCircle, Navigation, ExternalLink } from 'lucide-react';
 import { RESTAURANT_INFO } from '@/lib/schema';
