@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 const REVIEWS = [
   {
@@ -42,112 +42,126 @@ const REVIEWS = [
 ];
 
 export default function ReviewsCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scroll
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    let animFrame: number;
-    let scrollPos = 0;
-    const speed = 0.5;
-
-    const tick = () => {
-      scrollPos += speed;
-      if (scrollPos >= track.scrollWidth / 2) scrollPos = 0;
-      track.scrollLeft = scrollPos;
-      animFrame = requestAnimationFrame(tick);
-    };
-
-    animFrame = requestAnimationFrame(tick);
-
-    // Pause on hover
-    const pause = () => cancelAnimationFrame(animFrame);
-    const resume = () => { animFrame = requestAnimationFrame(tick); };
-    track.addEventListener('mouseenter', pause);
-    track.addEventListener('mouseleave', resume);
-    track.addEventListener('touchstart', pause, { passive: true });
-    track.addEventListener('touchend', resume);
-
-    return () => {
-      cancelAnimationFrame(animFrame);
-      track.removeEventListener('mouseenter', pause);
-      track.removeEventListener('mouseleave', resume);
-      track.removeEventListener('touchstart', pause);
-      track.removeEventListener('touchend', resume);
-    };
-  }, []);
-
   const allReviews = [...REVIEWS, ...REVIEWS]; // Duplicate for seamless loop
 
   return (
     <section
       aria-label="Customer reviews"
       style={{
-        background: 'var(--slate-deep)',
+        position: 'relative',
+        background: 'var(--bg-secondary)',
         borderTop: '1px solid var(--border)',
         paddingBlock: 'var(--space-16)',
         overflow: 'hidden',
       }}
     >
-      {/* Header */}
-      <div className="container" style={{ textAlign: 'center', marginBottom: 'var(--space-10)' }}>
-        <span className="text-subheading" style={{ display: 'block', marginBottom: 'var(--space-4)' }}>
-          What Our Guests Say
-        </span>
-        <h2 className="text-heading-section">
-          Over 1,200 Five-Star Moments
-        </h2>
-        <span className="divider-gold center" style={{ marginTop: 'var(--space-4)' }} />
-      </div>
-
-      {/* Scrolling strip */}
-      <div
-        ref={trackRef}
-        className="reviews-track"
-        style={{
-          paddingInline: 'var(--space-6)',
-          cursor: 'grab',
-          userSelect: 'none',
-        }}
-        role="list"
-        aria-label="Customer review carousel"
-      >
-        {allReviews.map((review, i) => (
-          <article
-            key={i}
-            className="review-card"
-            role="listitem"
-            aria-label={`Review by ${review.author}`}
+      {/* Asymmetric Header */}
+      <div className="container" style={{ marginBottom: 'var(--space-12)' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 'var(--space-6)' }}>
+          <div>
+            <span className="text-subheading eyebrow" style={{ color: 'var(--teal)', display: 'block', marginBottom: 'var(--space-2)' }}>
+              What Our Guests Say
+            </span>
+            <h2 className="text-heading-section" style={{ color: 'var(--obsidian)' }}>
+              Over 1,200 Five-Star Moments
+            </h2>
+          </div>
+          <a
+            href="https://g.page/r/on-sixth-restaurant"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary"
+            style={{ whiteSpace: 'nowrap' }}
           >
-            <div className="review-card__stars" aria-label={`${review.stars} out of 5 stars`}>
-              {[...Array(review.stars)].map((_, j) => (
-                <span key={j} aria-hidden="true">★</span>
-              ))}
-            </div>
-            <blockquote>
-              <p className="review-card__text">&ldquo;{review.text}&rdquo;</p>
-            </blockquote>
-            <footer>
-              <div className="review-card__author">{review.author}</div>
-              <div className="review-card__platform">{review.platform}</div>
-            </footer>
-          </article>
-        ))}
+            Read all on Google ↗
+          </a>
+        </div>
       </div>
 
-      {/* CTA */}
-      <div style={{ textAlign: 'center', marginTop: 'var(--space-8)' }}>
-        <a
-          href="https://g.page/r/on-sixth-restaurant"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-ghost btn-sm"
+      {/* Hardware Accelerated Infinite Marquee */}
+      <div
+        className="marquee-container"
+        style={{
+          display: 'flex',
+          overflow: 'hidden',
+          width: '100%',
+          position: 'relative'
+        }}
+      >
+        <motion.div
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{
+            duration: 40,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+          style={{
+            display: 'flex',
+            gap: 'var(--space-6)',
+            paddingInline: 'var(--space-6)',
+            width: 'max-content'
+          }}
         >
-          Read all reviews on Google ↗
-        </a>
+          {allReviews.map((review, i) => (
+            <article
+              key={i}
+              style={{
+                width: '380px',
+                background: 'var(--bg-card)',
+                border: '1px solid var(--border)',
+                padding: 'var(--space-8)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+              }}
+              role="listitem"
+              aria-label={`Review by ${review.author}`}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
+                  <div style={{ fontSize: 'var(--text-lg)', fontWeight: 600, color: 'var(--obsidian)' }}>
+                    {review.stars}.0 <span style={{ color: 'var(--teal)' }}>★</span>
+                  </div>
+                </div>
+                <p style={{ 
+                  color: 'var(--slate-mid)', 
+                  fontSize: 'var(--text-base)', 
+                  lineHeight: 'var(--leading-relaxed)', 
+                  marginBottom: 'var(--space-6)' 
+                }}>
+                  {review.text}
+                </p>
+              </div>
+              <footer style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <div style={{ color: 'var(--obsidian)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>{review.author}</div>
+                <div style={{ color: 'var(--muted)', fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-wide)' }}>{review.platform}</div>
+              </footer>
+            </article>
+          ))}
+        </motion.div>
       </div>
+      
+      {/* Edge gradient fade masks */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        width: '10%',
+        background: 'linear-gradient(90deg, var(--bg-secondary) 0%, transparent 100%)',
+        pointerEvents: 'none',
+        zIndex: 1
+      }} />
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0,
+        width: '10%',
+        background: 'linear-gradient(270deg, var(--bg-secondary) 0%, transparent 100%)',
+        pointerEvents: 'none',
+        zIndex: 1
+      }} />
     </section>
   );
 }

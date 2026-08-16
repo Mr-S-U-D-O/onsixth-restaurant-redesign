@@ -10,9 +10,9 @@
   position: relative;
 }
 
-.nav-link:hover { color: var(--gold); }
+.nav-link:hover { color: var(--teal); }
 
-.nav-link.active { color: var(--gold); }
+.nav-link.active { color: var(--teal); }
 
 /* ── Section dividers ── */
 .section-divider {
@@ -28,18 +28,18 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(18,19,22,0.3) 0%,
-    rgba(18,19,22,0.6) 50%,
-    rgba(18,19,22,0.92) 100%
+    rgba(252,252,252,0.1) 0%,
+    rgba(252,252,252,0.4) 50%,
+    rgba(252,252,252,0.95) 100%
   );
   pointer-events: none;
 }
 
 /* ── Scrolled nav state ── */
 .navbar-scrolled {
-  background: rgba(18,19,22,0.9) !important;
+  background: rgba(255,255,255,0.95) !important;
   backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid rgba(212,175,55,0.1) !important;
+  border-bottom: 1px solid var(--border) !important;
 }
 
 /* ── Mobile menu overlay ── */
@@ -94,8 +94,8 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(18,19,22,0.95) 0%,
-    rgba(18,19,22,0.3) 60%,
+    rgba(17,17,17,0.9) 0%,
+    rgba(17,17,17,0.2) 60%,
     transparent 100%
   );
 }
@@ -119,22 +119,6 @@
   .kitchen-split {
     grid-template-columns: 1fr;
   }
-}
-
-/* ── Reviews carousel ── */
-.reviews-track {
-  display: flex;
-  gap: var(--space-6);
-  overflow-x: auto;
-  padding-bottom: var(--space-4);
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.reviews-track::-webkit-scrollbar { display: none; }
-
-.reviews-track .review-card {
-  scroll-snap-align: start;
 }
 
 /* ── Menu page layout ── */

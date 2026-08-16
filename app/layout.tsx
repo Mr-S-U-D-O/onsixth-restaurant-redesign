@@ -1,14 +1,28 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
 import '@/styles/design-system.css';
 import '@/styles/components.css';
 import '@/styles/animations.css';
 import './globals.css';
-import { buildRestaurantSchema } from '@/lib/schema';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-plus-jakarta',
+  display: 'swap',
+});
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import DayNightController from '@/components/ui/DayNightController';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import FloatingWidget from '@/components/ui/FloatingWidget';
+import { buildRestaurantSchema } from '@/lib/schema';
 
 const schema = buildRestaurantSchema();
 
@@ -89,7 +103,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-ZA" suppressHydrationWarning>
+    <html lang="en-ZA" className={`${outfit.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
       <head>
         <Script
           id="restaurant-schema"
@@ -103,6 +117,7 @@ export default function RootLayout({
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />
+        <FloatingWidget />
       </body>
     </html>
   );

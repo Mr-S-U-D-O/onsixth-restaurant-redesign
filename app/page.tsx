@@ -1,395 +1,496 @@
-import Link from 'next/link';
-import { ChevronDown, Star, Award, Heart, MapPin } from 'lucide-react';
-import ReviewsCarousel from '@/components/home/ReviewsCarousel';
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import MagneticButton from "@/components/ui/MagneticButton";
+import ReviewsCarousel from "@/components/home/ReviewsCarousel";
+
+import type { Variants } from "framer-motion";
+
+// ─── Animation Variants ──────────────────────────────────────
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (custom: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1] as const,
+      delay: custom * 0.1,
+    },
+  }),
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
 
 // ─── Hero Section ───────────────────────────────────────────────
 function Hero() {
+  const containerRef = useRef(null);
+
   return (
     <section
+      ref={containerRef}
       aria-label="Welcome to On Sixth Restaurant"
       style={{
-        position: 'relative',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
+        position: "relative",
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        background: "var(--bg-primary)",
+        paddingTop: "var(--space-32)",
+        paddingBottom: "var(--space-12)",
+        overflow: "hidden"
       }}
+      className="container"
     >
-      {/* Ambient gradient background (video placeholder) */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: `
-            radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,122,86,0.18) 0%, transparent 70%),
-            radial-gradient(ellipse 60% 80% at 20% 80%, rgba(212,175,55,0.1) 0%, transparent 60%),
-            radial-gradient(ellipse 50% 50% at 80% 20%, rgba(212,175,55,0.08) 0%, transparent 50%),
-            #121316
-          `,
-        }}
-      />
-
-      {/* Ambient moving particles */}
-      <div aria-hidden="true" style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              width: `${60 + i * 40}px`,
-              height: `${60 + i * 40}px`,
-              borderRadius: '50%',
-              background: i % 2 === 0
-                ? 'rgba(212,175,55,0.04)'
-                : 'rgba(201,122,86,0.04)',
-              left: `${10 + i * 15}%`,
-              top: `${20 + (i % 3) * 20}%`,
-              animation: `floatUp ${4 + i}s ease-in-out infinite`,
-              animationDelay: `${i * 0.5}s`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Hero overlay */}
-      <div className="hero-overlay" aria-hidden="true" />
-
-      {/* Content */}
-      <div
-        className="container"
-        style={{
-          position: 'relative',
-          zIndex: 2,
-          textAlign: 'center',
-          paddingTop: 'var(--space-24)',
-          paddingBottom: 'var(--space-16)',
-        }}
+      {/* Top Layer: Est 2015 & Subtext */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+        style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "var(--space-8)" }}
       >
-        {/* Eyebrow */}
-        <div className="animate-fade-up" style={{ marginBottom: 'var(--space-6)' }}>
-          <span className="text-subheading">
-            Northmead, Benoni · Est. July 2015
+        <motion.div variants={fadeUp} custom={1} style={{ display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
+          <div style={{ width: "40px", height: "1px", background: "var(--obsidian)" }} />
+          <span style={{ fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-widest)", fontWeight: 600, color: "var(--obsidian)" }}>
+            Est. 2015
           </span>
-        </div>
+        </motion.div>
 
-        {/* Main headline */}
-        <h1
-          className="text-heading-hero animate-fade-up delay-200"
-          style={{ marginBottom: 'var(--space-6)', maxWidth: '800px', marginInline: 'auto' }}
-        >
-          Where Craft Meets Heritage.{' '}
-          <em className="text-gradient">It&apos;s All About Taste.</em>
-        </h1>
-
-        {/* Sub-headline */}
-        <p
-          className="text-body animate-fade-up delay-300"
+        <motion.p
+          variants={fadeUp}
+          custom={2}
+          className="text-body"
           style={{
-            fontSize: 'var(--text-lg)',
-            maxWidth: '540px',
-            margin: '0 auto var(--space-10)',
-            color: 'var(--cream-dim)',
+            fontSize: "var(--text-base)",
+            maxWidth: "320px",
+            color: "var(--slate-mid)",
+            lineHeight: "var(--leading-relaxed)",
+            textAlign: "right"
           }}
         >
-          Award-winning sushi, wood-fired pizzaladière & handcrafted cocktails —
-          served in Benoni&apos;s most atmospheric open-plan kitchen.
-        </p>
+          Award-winning upmarket dining featuring artisanal sushi, an open-plan wood-fired kitchen, and a devotion to structural flavor.
+        </motion.p>
+      </motion.div>
 
-        {/* Dual CTA */}
-        <div
-          className="animate-fade-up delay-400"
-          style={{ display: 'flex', gap: 'var(--space-4)', justifyContent: 'center', flexWrap: 'wrap' }}
+      {/* Center: Massive Typography with Inline Image */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+        style={{ width: "100%", marginTop: "auto", marginBottom: "auto", paddingTop: "var(--space-16)" }}
+      >
+        <motion.h1
+          variants={fadeUp}
+          custom={3}
+          className="text-heading-hero"
+          style={{
+            color: "var(--obsidian)",
+            fontSize: "clamp(3.5rem, 10vw, 8rem)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.03em",
+            maxWidth: "100%",
+            margin: 0
+          }}
         >
+          Where Craft
+          <span 
+            style={{ 
+              display: "inline-block", 
+              width: "clamp(80px, 15vw, 160px)", 
+              height: "clamp(40px, 7vw, 80px)", 
+              borderRadius: "999px",
+              backgroundImage: "url('/hero_fire.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              margin: "0 16px",
+              verticalAlign: "middle",
+              border: "1px solid var(--border)"
+            }} 
+            role="img" 
+            aria-label="Roaring fire in the open kitchen"
+          />
+          <br />Meets Heritage.
+        </motion.h1>
+      </motion.div>
+
+      {/* Bottom Right: CTAs */}
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+        style={{ display: "flex", justifyContent: "flex-end", gap: "var(--space-4)", marginTop: "var(--space-12)" }}
+      >
+        <MagneticButton>
           <Link href="/menu" className="btn btn-primary btn-lg">
-            Explore Digital Menu
+            Explore Menu
           </Link>
+        </MagneticButton>
+        <MagneticButton>
           <Link href="/reservations" className="btn btn-secondary btn-lg">
             Reserve a Table
           </Link>
-        </div>
+        </MagneticButton>
+      </motion.div>
 
-        {/* Scroll cue */}
-        <div
-          className="animate-float"
-          style={{
-            marginTop: 'var(--space-16)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 'var(--space-2)',
-            color: 'var(--muted)',
-          }}
-          aria-hidden="true"
-        >
-          <span style={{ fontSize: 'var(--text-xs)', letterSpacing: 'var(--tracking-widest)', textTransform: 'uppercase' }}>
-            Discover
-          </span>
-          <ChevronDown size={18} />
-        </div>
-      </div>
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          .text-body {
+            text-align: left !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
 
-// ─── Awards Strip ───────────────────────────────────────────────
+// ─── Infinite Trust Marquee ──────────────────────────────────────
 const AWARDS = [
-  { icon: '🏆', label: 'Best Upmarket Restaurant', sub: 'Best of Ekurhuleni' },
-  { icon: '💍', label: 'Best Romantic Restaurant', sub: 'Best of Ekurhuleni' },
-  { icon: '🏡', label: 'Best Neighbourhood Eatery', sub: 'Best of Ekurhuleni' },
-  { icon: '⭐', label: '4.8 / 5 Stars', sub: 'Across 1,200+ Reviews' },
+  "Best Upmarket Restaurant",
+  "Best Romantic Restaurant",
+  "Best Neighbourhood",
+  "4.8 / 5 Stars",
+  "Best of Ekurhuleni",
+  "Over 1,200+ Reviews"
 ];
 
 function AwardsStrip() {
   return (
-    <section aria-label="Awards and accolades" className="awards-strip">
-      <div className="container">
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 'var(--space-10)',
-            flexWrap: 'wrap',
-          }}
+    <section
+      aria-label="Awards and accolades"
+      style={{ 
+        background: "var(--obsidian)", 
+        color: "var(--cream)", 
+        padding: "var(--space-6) 0",
+        overflow: "hidden",
+        borderTop: "1px solid var(--slate-deep)",
+        borderBottom: "1px solid var(--slate-deep)"
+      }}
+    >
+      <div className="marquee-container" style={{ display: "flex", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>
+        <motion.div 
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+          style={{ display: "flex", gap: "var(--space-12)", minWidth: "200%" }}
         >
-          {AWARDS.map((award, i) => (
-            <div key={i} className="award-item">
-              <div className="award-item__icon" aria-hidden="true">{award.icon}</div>
-              <div className="award-item__label">{award.label}</div>
-              <div className="award-item__sub">{award.sub}</div>
+          {/* Duplicate array for seamless looping */}
+          {[...AWARDS, ...AWARDS].map((award, i) => (
+            <div 
+              key={i} 
+              style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "var(--space-12)",
+                fontFamily: "var(--font-display)",
+                fontSize: "var(--text-sm)",
+                letterSpacing: "var(--tracking-widest)",
+                textTransform: "uppercase",
+                fontWeight: 600
+              }}
+            >
+              <span>{award}</span>
+              <span aria-hidden="true" style={{ color: "var(--teal)", fontSize: "1.2rem" }}>•</span>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-// ─── Culinary Trifecta ──────────────────────────────────────────
-const TRIFECTA = [
-  {
-    id: 'sushi',
-    emoji: '🍣',
-    title: 'Sushi & Sashimi',
-    desc: 'Premium-grade Norwegian salmon, tuna & yellowtail. Sliced fresh in our open kitchen — no shortcuts, ever.',
-    href: '/menu#sushi',
-    gradient: 'linear-gradient(135deg, #1a1200 0%, #2d1f00 100%)',
-    accentColor: '#D4AF37',
-  },
-  {
-    id: 'pizza',
-    emoji: '🍕',
-    title: 'Oblong Pizzaladière',
-    desc: 'Our signature wood-fired thin crust. Stretched long, fired hot, dressed with intention. Vegan base available.',
-    href: '/menu#pizza',
-    gradient: 'linear-gradient(135deg, #1a0800 0%, #2d1200 100%)',
-    accentColor: '#C97A56',
-  },
-  {
-    id: 'skewers',
-    emoji: '🍢',
-    title: 'Signature Skewers',
-    desc: 'Grilled halloumi, chorizo, peppadews & balsamic glaze. Our most-ordered starter for seven years running.',
-    href: '/menu#starters',
-    gradient: 'linear-gradient(135deg, #0a1a10 0%, #122a1a 100%)',
-    accentColor: '#4ade80',
-  },
-];
-
-function CulinaryTrifecta() {
+// ─── Culinary Z-Axis Cascade ────────────────────────────────────
+function CulinaryCascade() {
   return (
     <section
       aria-label="Our signature dishes"
       className="section-pad"
-      style={{ background: 'var(--bg-primary)' }}
+      style={{ background: "var(--bg-primary)" }}
     >
       <div className="container">
-        <div className="section-header center reveal" style={{ marginBottom: 'var(--space-12)' }}>
-          <span className="text-subheading eyebrow">The Art of Taste</span>
-          <h2 className="text-heading-section">Three Pillars of Our Kitchen</h2>
-          <span className="divider-gold center" style={{ marginTop: 'var(--space-4)' }} />
-        </div>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 'var(--space-6)',
-          }}
+        <motion.div
+          className="section-header"
+          style={{ marginBottom: "var(--space-16)", maxWidth: "600px" }}
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
         >
-          {TRIFECTA.map((item, i) => (
-            <Link
-              key={item.id}
-              href={item.href}
-              className={`culinary-card reveal delay-${(i + 1) * 200}`}
-              aria-label={`Explore ${item.title}`}
-              style={{ textDecoration: 'none' }}
+          <span className="text-subheading eyebrow">The Art of Taste</span>
+          <h2
+            className="text-heading-section"
+            style={{ color: "var(--obsidian)" }}
+          >
+            Pillars of Our Kitchen
+          </h2>
+        </motion.div>
+
+        <div style={{ display: "grid", gap: "var(--space-20)" }}>
+          {/* Item 1: Sushi (Image Left, Text Right) */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "var(--space-10)",
+              alignItems: "center",
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              style={{
+                position: "relative",
+                aspectRatio: "4/3",
+                width: "100%",
+              }}
             >
-              <div
-                className="culinary-card__bg"
-                style={{ background: item.gradient }}
-                aria-hidden="true"
+              <Image
+                src="/premium_sushi.jpg"
+                alt="Premium Norwegian salmon sashimi"
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2 }}
+            >
+              <span
+                className="text-subheading"
+                style={{
+                  color: "var(--teal)",
+                  marginBottom: "var(--space-2)",
+                  display: "block",
+                }}
               >
-                {/* Large emoji as visual placeholder */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '120px',
-                    opacity: 0.15,
-                    filter: 'grayscale(0.3)',
-                  }}
-                >
-                  {item.emoji}
-                </div>
-              </div>
-              <div className="culinary-card__overlay" aria-hidden="true" />
-              <div className="culinary-card__content">
-                <div style={{ fontSize: 'var(--text-2xl)', marginBottom: 'var(--space-3)' }} aria-hidden="true">
-                  {item.emoji}
-                </div>
-                <h3
-                  className="text-heading-card"
-                  style={{ color: item.accentColor, marginBottom: 'var(--space-3)' }}
-                >
-                  {item.title}
-                </h3>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--cream-dim)', lineHeight: 'var(--leading-relaxed)', marginBottom: 'var(--space-4)' }}>
-                  {item.desc}
-                </p>
-                <span
-                  style={{
-                    fontSize: 'var(--text-xs)',
-                    fontWeight: 600,
-                    color: item.accentColor,
-                    letterSpacing: 'var(--tracking-wide)',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  View on Menu →
-                </span>
-              </div>
-            </Link>
-          ))}
+                01
+              </span>
+              <h3
+                className="text-heading-card"
+                style={{
+                  color: "var(--obsidian)",
+                  marginBottom: "var(--space-4)",
+                  fontSize: "var(--text-4xl)",
+                }}
+              >
+                Sushi & Sashimi
+              </h3>
+              <p
+                className="text-body"
+                style={{ marginBottom: "var(--space-6)", maxWidth: "400px" }}
+              >
+                Premium-grade Norwegian salmon, tuna & yellowtail. Sliced fresh
+                in our open kitchen — no shortcuts, ever. Clean, precise, and
+                visually arresting.
+              </p>
+              <Link href="/menu#sushi" className="btn btn-secondary">
+                Explore Sushi
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Item 2: Pizza (Text Left, Image Right) */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "var(--space-10)",
+              alignItems: "center",
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="pizza-text"
+            >
+              <span
+                className="text-subheading"
+                style={{
+                  color: "var(--teal)",
+                  marginBottom: "var(--space-2)",
+                  display: "block",
+                }}
+              >
+                02
+              </span>
+              <h3
+                className="text-heading-card"
+                style={{
+                  color: "var(--obsidian)",
+                  marginBottom: "var(--space-4)",
+                  fontSize: "var(--text-4xl)",
+                }}
+              >
+                Oblong Pizzaladière
+              </h3>
+              <p
+                className="text-body"
+                style={{ marginBottom: "var(--space-6)", maxWidth: "400px" }}
+              >
+                Our signature wood-fired thin crust. Stretched long, fired hot,
+                dressed with intention. A modern take on structural flavor
+                pairing.
+              </p>
+              <Link href="/menu#pizza" className="btn btn-secondary">
+                Explore Pizza
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              style={{
+                position: "relative",
+                aspectRatio: "4/3",
+                width: "100%",
+              }}
+              className="pizza-image"
+            >
+              <Image
+                src="/premium_pizza.jpg"
+                alt="Wood-fired oblong pizzaladiere"
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </motion.div>
+          </div>
         </div>
       </div>
+      <style jsx>{`
+        @media (min-width: 768px) {
+          .pizza-text {
+            order: 1 !important;
+          }
+          .pizza-image {
+            order: 2 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
 
-// ─── Open Kitchen Theatre ───────────────────────────────────────
+// ─── Open Kitchen Theatre (Bento Grid) ───────────────────────
 function OpenKitchenTheatre() {
   return (
     <section
       aria-label="Our open kitchen"
       style={{
-        background: 'var(--slate-deep)',
-        borderTop: '1px solid var(--border)',
-        borderBottom: '1px solid var(--border)',
+        paddingBlock: "var(--space-24)",
+        background: "var(--bg-secondary)",
+        borderTop: "1px solid var(--border)",
       }}
     >
-      <div className="kitchen-split">
-        {/* Visual side */}
+      <div className="container">
         <div
-          aria-hidden="true"
           style={{
-            background: `
-              radial-gradient(ellipse 70% 50% at 30% 60%, rgba(201,122,86,0.3) 0%, transparent 70%),
-              radial-gradient(ellipse 50% 60% at 70% 30%, rgba(212,175,55,0.2) 0%, transparent 60%),
-              #1C1E24
-            `,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '500px',
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "var(--space-12)",
+            alignItems: "center",
           }}
+          className="kitchen-grid"
         >
-          <div style={{ textAlign: 'center', opacity: 0.4 }}>
-            <div style={{ fontSize: '120px', lineHeight: 1 }}>🔥</div>
-            <div style={{ fontSize: '14px', color: 'var(--muted)', marginTop: '16px', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-              Open Kitchen
+          {/* Text Content */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            style={{ paddingRight: "var(--space-8)" }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
+              <div style={{ width: "32px", height: "1px", background: "var(--slate-mid)" }} />
+              <span
+                style={{
+                  color: "var(--slate-mid)",
+                  fontSize: "var(--text-xs)",
+                  textTransform: "uppercase",
+                  letterSpacing: "var(--tracking-widest)",
+                  fontWeight: 600
+                }}
+              >
+                Culinary Theatre
+              </span>
             </div>
-          </div>
-        </div>
-
-        {/* Copy side */}
-        <div
-          className="container"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: 'var(--space-16) var(--space-8)',
-          }}
-        >
-          <div className="reveal-right">
-            <span className="text-subheading" style={{ display: 'block', marginBottom: 'var(--space-5)' }}>
-              Culinary Theatre
-            </span>
-            <h2 className="text-heading-section" style={{ marginBottom: 'var(--space-5)' }}>
-              Freshly Prepared in Full View
+            
+            <h2
+              className="text-heading-section"
+              style={{ color: "var(--obsidian)", marginBottom: "var(--space-6)", fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+            >
+              Prepared in<br/>Full View.
             </h2>
-            <span className="divider-gold" style={{ marginBottom: 'var(--space-6)' }} />
-            <p className="text-body" style={{ marginBottom: 'var(--space-4)' }}>
-              Our open-plan kitchen is the beating heart of On Sixth. Watch as our chefs slice fresh salmon, stretch oblong pizza dough, and flame-grill skewers — all within arm&apos;s reach.
+            <p
+              className="text-body"
+              style={{
+                color: "var(--slate-mid)",
+                marginBottom: "var(--space-10)",
+                fontSize: "var(--text-lg)",
+                lineHeight: "var(--leading-relaxed)",
+                maxWidth: "480px"
+              }}
+            >
+              Our open-plan kitchen is the beating heart of On Sixth. Watch as our
+              chefs slice fresh salmon, stretch oblong pizza dough, and
+              flame-grill skewers — all within arm&apos;s reach. No hidden
+              kitchens, no mystery.
             </p>
-            <p className="text-body" style={{ marginBottom: 'var(--space-8)' }}>
-              We believe the best food should be seen, smelled, and heard before it arrives at your table. No hidden kitchens, no mystery — just devotion to the art of taste.
-            </p>
-            <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-              <Link href="/experience" className="btn btn-secondary">
-                Our Story
-              </Link>
-              <Link href="/reservations" className="btn btn-ghost">
-                Book a Table
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+            <Link href="/experience" className="btn btn-primary" style={{ borderRadius: "4px" }}>
+              Discover Our Story
+            </Link>
+          </motion.div>
 
-// ─── Heritage Teaser ────────────────────────────────────────────
-function HeritageTeaser() {
-  return (
-    <section
-      aria-label="Our heritage"
-      className="section-pad"
-      style={{
-        background: 'var(--bg-primary)',
-        borderBottom: '1px solid var(--border)',
-      }}
-    >
-      <div className="container" style={{ textAlign: 'center' }}>
-        <div className="reveal">
-          <span className="text-subheading" style={{ display: 'block', marginBottom: 'var(--space-5)' }}>
-            Since 1887 in Spirit
-          </span>
-          <h2
-            className="text-heading-section"
-            style={{ marginBottom: 'var(--space-5)', maxWidth: '700px', marginInline: 'auto' }}
+          {/* Sharp Image Bento */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            style={{
+              position: "relative",
+              width: "100%",
+              aspectRatio: "3/4",
+              border: "1px solid var(--border)",
+              borderRadius: "8px",
+              overflow: "hidden",
+              background: "var(--bg-primary)"
+            }}
           >
-            19th Century Mining Nostalgia,{' '}
-            <em className="text-gradient">21st Century Gastronomy</em>
-          </h2>
-          <span className="divider-gold center" style={{ marginBottom: 'var(--space-6)' }} />
-          <p
-            className="text-body"
-            style={{ maxWidth: '580px', marginInline: 'auto', marginBottom: 'var(--space-8)' }}
-          >
-            Our walls are lined with authentic Benoni mining-era newspaper clippings and sepia photographs — a tribute to the gold-rush spirit that built this town. Come for the food, stay for the stories.
-          </p>
-          <Link href="/experience" className="btn btn-primary">
-            Discover Our Story
-          </Link>
+            <Image
+              src="/hero_fire_kitchen_1786904491778.jpg"
+              alt="Open kitchen roaring fire"
+              fill
+              style={{ objectFit: "cover", filter: "contrast(115%) saturate(110%)" }}
+            />
+          </motion.div>
         </div>
       </div>
+      <style jsx>{`
+        @media (max-width: 1024px) {
+          .kitchen-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
@@ -400,9 +501,8 @@ export default function HomePage() {
     <>
       <Hero />
       <AwardsStrip />
-      <CulinaryTrifecta />
+      <CulinaryCascade />
       <OpenKitchenTheatre />
-      <HeritageTeaser />
       <ReviewsCarousel />
     </>
   );

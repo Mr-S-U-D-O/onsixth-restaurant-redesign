@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
@@ -17,6 +17,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -27,122 +28,151 @@ export default function Navbar() {
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  // Prevent body scroll when mobile menu is open
+  // Manage mobile menu state (body scroll, escape key, focus trap)
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (!mobileOpen) {
+      document.body.style.overflow = '';
+      return;
+    }
+
+    document.body.style.overflow = 'hidden';
+    
+    // Focus first element
+    const focusableElements = mobileMenuRef.current?.querySelectorAll(
+      'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+    );
+    const firstElement = focusableElements?.[0] as HTMLElement;
+    const lastElement = focusableElements?.[focusableElements.length - 1] as HTMLElement;
+    
+    firstElement?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+      }
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement?.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement?.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [mobileOpen]);
 
   return (
     <>
       <a href="#main-content" className="skip-link">Skip to main content</a>
 
-      <header
-        role="banner"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 'var(--z-nav)' as never,
-          padding: 'var(--space-4) 0',
-          transition: 'all var(--ease-normal)',
-          background: scrolled ? 'rgba(18,19,22,0.92)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(212,175,55,0.1)' : '1px solid transparent',
-        }}
-      >
-        <div
-          className="container"
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 'var(--z-nav)' as never, pointerEvents: 'none' }}>
+        <header
+          role="banner"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            pointerEvents: 'auto',
+            margin: scrolled ? 'var(--space-4) auto' : '0 auto',
+            maxWidth: scrolled ? '1200px' : '100%',
+            width: scrolled ? 'calc(100% - var(--space-8))' : '100%',
+            borderRadius: scrolled ? 'var(--radius-full)' : '0',
+            padding: scrolled ? 'var(--space-2) var(--space-6)' : 'var(--space-4) var(--space-8)',
+            transition: 'all var(--ease-normal)',
+            background: scrolled ? 'rgba(252,252,252,0.85)' : 'transparent',
+            backdropFilter: scrolled ? 'blur(20px)' : 'none',
+            border: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+            boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.04)' : 'none',
           }}
         >
-          {/* Logo */}
-          <Link
-            href="/"
-            aria-label="On Sixth Restaurant — Home"
-            style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--text-xl)',
-                color: 'var(--gold)',
-                letterSpacing: 'var(--tracking-wider)',
-                lineHeight: 1,
-              }}
-            >
-              ON SIXTH
-            </span>
-            <span
-              style={{
-                fontFamily: 'var(--font-body)',
-                fontSize: 'var(--text-xs)',
-                color: 'var(--muted)',
-                letterSpacing: 'var(--tracking-widest)',
-                textTransform: 'uppercase',
-              }}
-            >
-              Restaurant
-            </span>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav
-            aria-label="Main navigation"
+          <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--space-8)',
+              justifyContent: 'space-between',
+              width: '100%',
             }}
-            className="desktop-nav"
           >
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`nav-link hover-underline-gold ${pathname === link.href ? 'active' : ''}`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Reserve CTA */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+            {/* Logo */}
             <Link
-              href="/reservations"
-              className="btn btn-primary btn-sm"
-              style={{ display: 'none' }}
-              id="nav-reserve-btn"
+              href="/"
+              aria-label="On Sixth Restaurant — Home"
+              style={{ display: 'flex', alignItems: 'center', height: scrolled ? '36px' : '48px', position: 'relative', zIndex: 10, transition: 'height var(--ease-normal)' }}
             >
-              Reserve a Table
+              <img src="/logo.svg" alt="" aria-hidden="true" style={{ height: '100%', width: 'auto' }} />
             </Link>
 
-            {/* Mobile hamburger */}
-            <button
-              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-menu"
-              onClick={() => setMobileOpen(!mobileOpen)}
+            {/* Desktop Nav */}
+            <nav
+              aria-label="Main navigation"
               style={{
-                color: 'var(--cream)',
-                padding: 'var(--space-2)',
-                borderRadius: 'var(--radius-sm)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--space-8)',
               }}
+              className="desktop-nav"
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-current={pathname === link.href ? 'page' : undefined}
+                  style={{
+                    color: 'var(--teal)',
+                    fontWeight: pathname === link.href ? 600 : 400,
+                    borderBottom: pathname === link.href ? '2px solid var(--teal)' : '2px solid transparent',
+                    paddingBottom: '2px',
+                    transition: 'all 0.2s ease',
+                  }}
+                  className={pathname === link.href ? 'active' : ''}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Reserve CTA */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+              <Link
+                href="/reservations"
+                className="btn btn-primary btn-sm"
+                style={{ display: 'none' }}
+                id="nav-reserve-btn"
+              >
+                Reserve a Table
+              </Link>
+
+              {/* Mobile hamburger */}
+              <button
+                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-menu"
+                onClick={() => setMobileOpen(!mobileOpen)}
+                style={{
+                  color: 'var(--obsidian)',
+                  padding: 'var(--space-2)',
+                  borderRadius: 'var(--radius-sm)',
+                }}
+              >
+                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </div>
 
       {/* Mobile Menu Overlay */}
       <div
         id="mobile-menu"
+        ref={mobileMenuRef}
         className={`mobile-menu ${mobileOpen ? 'open' : ''}`}
         role="dialog"
         aria-modal="true"
@@ -150,9 +180,7 @@ export default function Navbar() {
       >
         {/* Mobile logo + close */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-12)' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', color: 'var(--gold)', letterSpacing: 'var(--tracking-wider)' }}>
-            ON SIXTH
-          </span>
+          <img src="/logo.svg" alt="" aria-hidden="true" style={{ height: '40px', width: 'auto' }} />
           <button
             onClick={() => setMobileOpen(false)}
             aria-label="Close menu"
@@ -168,15 +196,17 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
+              aria-current={pathname === link.href ? 'page' : undefined}
               style={{
                 display: 'block',
                 fontFamily: 'var(--font-heading)',
                 fontSize: 'var(--text-4xl)',
                 fontStyle: 'italic',
                 fontWeight: 700,
-                color: pathname === link.href ? 'var(--gold)' : 'var(--cream)',
+                color: 'var(--teal)',
+                textDecoration: pathname === link.href ? 'underline' : 'none',
                 paddingBlock: 'var(--space-3)',
-                borderBottom: '1px solid var(--border)',
+                borderBottom: '1px solid rgba(255,255,255,0.1)',
                 animationDelay: `${i * 80}ms`,
               }}
               className={mobileOpen ? 'animate-fade-left' : ''}

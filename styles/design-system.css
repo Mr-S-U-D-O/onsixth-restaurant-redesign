@@ -1,58 +1,56 @@
 /* ============================================================
    ON SIXTH RESTAURANT — DESIGN SYSTEM
-   Brand tokens, typography, spacing, and adaptive variables
+   Premium Whitespace Dominant Theme (Ethereal / Soft Structuralism)
    ============================================================ */
-
-/* ── Google Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel+Decorative:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 /* ── Brand Color Tokens ── */
 :root {
-  /* Core Palette */
-  --obsidian:        #121316;
-  --slate-deep:      #1C1E24;
-  --slate-mid:       #23262E;
-  --slate-border:    #2E3140;
+  /* Core Monochrome */
+  --obsidian:        #111111;
+  --slate-deep:      #1A1A1A;
+  --slate-mid:       #242424;
+  --slate-border:    #E0E0E0;
 
-  --gold:            #D4AF37;
-  --gold-light:      #E8C84A;
-  --gold-dim:        #A88B2A;
-  --gold-subtle:     rgba(212, 175, 55, 0.12);
+  /* Teal Accent */
+  --teal:            #27B5B5;
+  --teal-light:      #4ED6D6;
+  --teal-dim:        #1A7A7A;
+  --teal-subtle:     rgba(39, 181, 181, 0.12);
 
+  /* Warm Accent */
   --terracotta:      #C97A56;
-  --terracotta-light:#E08B64;
-  --terracotta-dim:  #9E5E3D;
 
-  --cream:           #F5F5F0;
-  --cream-dim:       #D6D6CE;
-  --muted:           #8A8A7A;
-  --muted-light:     #AEAE9E;
+  /* Neutrals */
+  --cream:           #FCFCFC;
+  --cream-dim:       #F7F7F7;
+  --muted:           #777777;
+  --muted-light:     #999999;
 
-  --ember-glow:      linear-gradient(135deg, #C97A56 0%, #D4AF37 100%);
-  --gold-glow:       linear-gradient(135deg, #D4AF37 0%, #E8C84A 100%);
-  --obsidian-grad:   linear-gradient(180deg, #121316 0%, #1C1E24 100%);
+  --ember-glow:      linear-gradient(135deg, #1A7A7A 0%, #27B5B5 100%);
+  --teal-glow:       linear-gradient(135deg, #27B5B5 0%, #4ED6D6 100%);
+  --obsidian-grad:   linear-gradient(180deg, #FCFCFC 0%, #F7F7F7 100%);
 
-  /* Semantic */
-  --bg-primary:      var(--obsidian);
-  --bg-secondary:    var(--slate-deep);
-  --bg-card:         var(--slate-mid);
+  /* Semantic - DEFAULT (LIGHT/WHITESPACE DOMINANT) */
+  --bg-primary:      var(--cream);
+  --bg-secondary:    var(--cream-dim);
+  --bg-card:         #FFFFFF;
   --border:          var(--slate-border);
-  --text-primary:    var(--cream);
-  --text-secondary:  var(--cream-dim);
+  --text-primary:    var(--obsidian);
+  --text-secondary:  var(--slate-mid);
   --text-muted:      var(--muted);
-  --accent:          var(--gold);
-  --accent-hover:    var(--gold-light);
+  --accent:          var(--teal);
+  --accent-hover:    var(--teal-light);
   --accent-warm:     var(--terracotta);
 
   /* Overlays */
-  --overlay-hero:    rgba(18, 19, 22, 0.75);
-  --overlay-card:    rgba(18, 19, 22, 0.60);
-  --overlay-dark:    rgba(18, 19, 22, 0.92);
+  --overlay-hero:    rgba(252, 252, 252, 0.2);
+  --overlay-card:    rgba(252, 252, 252, 0.60);
+  --overlay-dark:    rgba(17, 17, 17, 0.92);
 
   /* ── Typography ── */
-  --font-heading:    'Playfair Display', Georgia, serif;
-  --font-display:    'Cinzel Decorative', serif;
-  --font-body:       'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-heading:    var(--font-outfit), sans-serif;
+  --font-display:    var(--font-outfit), sans-serif;
+  --font-body:       var(--font-plus-jakarta), system-ui, -apple-system, sans-serif;
 
   --text-xs:         0.6875rem;  /* 11px */
   --text-sm:         0.8125rem;  /* 13px */
@@ -64,20 +62,21 @@
   --text-4xl:        2.25rem;    /* 36px */
   --text-5xl:        3rem;       /* 48px */
   --text-6xl:        3.75rem;    /* 60px */
-  --text-7xl:        4.5rem;     /* 72px */
+  --text-7xl:        5rem;       /* 80px */
+  --text-8xl:        7.5rem;     /* 120px */
 
-  --leading-tight:   1.15;
-  --leading-snug:    1.35;
-  --leading-normal:  1.6;
-  --leading-relaxed: 1.75;
+  --leading-tight:   1.1;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.7;
 
-  --tracking-tight:  -0.03em;
+  --tracking-tight:  -0.04em;
   --tracking-normal: 0em;
-  --tracking-wide:   0.08em;
-  --tracking-wider:  0.15em;
-  --tracking-widest: 0.25em;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.1em;
+  --tracking-widest: 0.15em;
 
-  /* ── Spacing (4px base grid) ── */
+  /* ── Spacing (8px base grid, expanded macro spacing) ── */
   --space-1:   0.25rem;   /* 4px  */
   --space-2:   0.5rem;    /* 8px  */
   --space-3:   0.75rem;   /* 12px */
@@ -91,34 +90,36 @@
   --space-20:  5rem;      /* 80px */
   --space-24:  6rem;      /* 96px */
   --space-32:  8rem;      /* 128px */
+  --space-40:  10rem;     /* 160px */
+  --space-48:  12rem;     /* 192px */
 
   /* ── Layout ── */
   --container-sm:   640px;
   --container-md:   768px;
   --container-lg:   1024px;
   --container-xl:   1280px;
-  --container-2xl:  1440px;
+  --container-2xl:  1536px;
 
   /* ── Radius ── */
-  --radius-sm:   0.25rem;
-  --radius-md:   0.5rem;
-  --radius-lg:   0.875rem;
-  --radius-xl:   1.25rem;
+  --radius-sm:   0px;     /* Removed rounded corners for structuralism */
+  --radius-md:   0px;
+  --radius-lg:   0px;
+  --radius-xl:   0px;
   --radius-full: 9999px;
 
   /* ── Shadows ── */
-  --shadow-sm:   0 1px 3px rgba(0,0,0,0.4);
-  --shadow-md:   0 4px 16px rgba(0,0,0,0.5);
-  --shadow-lg:   0 12px 40px rgba(0,0,0,0.6);
-  --shadow-xl:   0 24px 64px rgba(0,0,0,0.7);
-  --shadow-gold: 0 4px 24px rgba(212,175,55,0.25);
-  --shadow-glow: 0 0 40px rgba(212,175,55,0.15);
+  --shadow-sm:   0 1px 3px rgba(17,17,17,0.05);
+  --shadow-md:   0 4px 16px rgba(17,17,17,0.08);
+  --shadow-lg:   0 12px 40px rgba(17,17,17,0.1);
+  --shadow-xl:   0 24px 64px rgba(17,17,17,0.12);
+  --shadow-gold: 0 4px 24px rgba(39,181,181,0.25);
+  --shadow-glow: 0 0 40px rgba(39,181,181,0.15);
 
   /* ── Transitions ── */
   --ease-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-slow:   600ms cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-normal: 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-slow:   800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: 600ms cubic-bezier(0.25, 1, 0.5, 1);
 
   /* ── Z-index stack ── */
   --z-base:     1;
@@ -129,14 +130,14 @@
   --z-toast:    400;
 }
 
-/* ── Day/Night Adaptive Theme ── */
-/* Default: Night mode (dark, candlelit warmth)
-   JS controller (.day-mode class) shifts to brighter tones */
-:root.day-mode {
-  --overlay-hero:   rgba(18, 19, 22, 0.55);
-  --gold:           #C9A227;
-  --gold-light:     #D4AF37;
-  --bg-secondary:   #18191F;
+/* ── Night Mode Adaptive Theme ── */
+:root.night-mode {
+  --bg-primary:      var(--obsidian);
+  --bg-secondary:    var(--slate-deep);
+  --bg-card:         var(--slate-mid);
+  --border:          var(--slate-border);
+  --text-primary:    var(--cream);
+  --text-secondary:  var(--cream-dim);
 }
 
 /* ── Base Reset ── */

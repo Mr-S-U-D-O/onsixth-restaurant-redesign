@@ -36,27 +36,36 @@ export default function MenuPage() {
       {/* Page Hero */}
       <div
         style={{
-          paddingTop: 'var(--space-24)',
-          paddingBottom: 'var(--space-10)',
-          background: 'var(--slate-deep)',
+          paddingTop: 'var(--space-32)',
+          paddingBottom: 'var(--space-16)',
+          background: 'var(--bg-primary)',
           borderBottom: '1px solid var(--border)',
-          textAlign: 'center',
         }}
       >
         <div className="container">
-          <span className="text-subheading" style={{ display: 'block', marginBottom: 'var(--space-4)' }}>
-            Freshly Updated · No PDFs
-          </span>
-          <h1 className="text-heading-section" style={{ marginBottom: 'var(--space-4)' }}>
-            Our Menu
-          </h1>
-          <span className="divider-gold center" />
-          <p
-            className="text-body"
-            style={{ marginTop: 'var(--space-5)', maxWidth: '480px', marginInline: 'auto' }}
-          >
-            Everything on this page is prepared fresh in our open kitchen. Filter by dietary preference and click any dish to see chef&apos;s notes and wine pairings.
-          </p>
+          <div style={{ maxWidth: '600px' }}>
+            <h1 
+              style={{ 
+                fontFamily: 'var(--font-display)', 
+                fontSize: 'clamp(3rem, 8vw, 5rem)', 
+                lineHeight: 1,
+                color: 'var(--obsidian)',
+                marginBottom: 'var(--space-6)',
+                letterSpacing: 'var(--tracking-tight)'
+              }}
+            >
+              Our Menu
+            </h1>
+            <p
+              style={{ 
+                fontSize: 'var(--text-lg)',
+                color: 'var(--slate-mid)',
+                lineHeight: 'var(--leading-relaxed)'
+              }}
+            >
+              Prepared fresh in our open kitchen. Filter by dietary preference and click any dish to see chef&apos;s notes and wine pairings.
+            </p>
+          </div>
         </div>
       </div>
 

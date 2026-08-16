@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { buildWhatsAppBookingUrl } from '@/lib/time-utils';
-import { MessageCircle, Calendar, Users, Clock, Armchair, CheckCircle } from 'lucide-react';
+import { MessageCircle, Calendar, Users, Clock, Armchair, CheckCircle, Utensils, Wine, GlassWater, Check } from 'lucide-react';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -17,19 +17,19 @@ const TIME_SLOTS = [
 const SEATING_OPTIONS = [
   {
     id: 'main',
-    icon: '🍽️',
+    icon: <Utensils size={24} />,
     name: 'Main Dining Hall',
     desc: 'Open-plan kitchen view, lively atmosphere',
   },
   {
     id: 'romantic',
-    icon: '🕯️',
+    icon: <Wine size={24} />,
     name: 'Romantic Alcove',
-    desc: 'Intimate candlelit nook for two',
+    desc: 'Intimate setting for two',
   },
   {
     id: 'bar',
-    icon: '🍸',
+    icon: <GlassWater size={24} />,
     name: 'Open Bar Seating',
     desc: 'Watch our mixologists at work',
   },
@@ -99,16 +99,18 @@ export default function ReservationsClient() {
       {submitted ? (
         // ── Success state ──
         <div style={{ textAlign: 'center', padding: 'var(--space-16) 0' }}>
-          <div style={{ fontSize: '72px', marginBottom: 'var(--space-6)' }}>🎉</div>
-          <h2 className="text-heading-section" style={{ marginBottom: 'var(--space-4)' }}>
-            Request Received!
+          <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'var(--obsidian)', color: 'var(--cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginInline: 'auto', marginBottom: 'var(--space-6)' }}>
+            <Check size={32} />
+          </div>
+          <h2 className="text-heading-section" style={{ marginBottom: 'var(--space-4)', color: 'var(--obsidian)' }}>
+            Request Received.
           </h2>
-          <p className="text-body" style={{ maxWidth: '440px', marginInline: 'auto', marginBottom: 'var(--space-8)' }}>
-            Thank you, {form.name || 'valued guest'}! We&apos;ll confirm your table for {form.partySize} on{' '}
+          <p className="text-body" style={{ maxWidth: '440px', marginInline: 'auto', marginBottom: 'var(--space-8)', color: 'var(--slate-mid)' }}>
+            Thank you, {form.name || 'valued guest'}. We&apos;ll confirm your table for {form.partySize} on{' '}
             {form.date ? new Date(form.date).toLocaleDateString('en-ZA', { weekday: 'long', day: 'numeric', month: 'long' }) : ''}{' '}
             at {form.time} shortly.
           </p>
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
             <MessageCircle size={18} />
             Confirm instantly via WhatsApp
           </a>
@@ -116,11 +118,25 @@ export default function ReservationsClient() {
       ) : (
         <>
           {/* Step indicator */}
-          <div className="booking-steps" aria-label="Booking progress" role="list">
+          <div className="booking-steps" aria-label="Booking progress" role="list" style={{ marginBottom: 'var(--space-8)' }}>
             {steps.map((s, i) => (
               <div key={s.number} style={{ display: 'flex', alignItems: 'center', flex: i < steps.length - 1 ? 1 : 'none' }}>
                 <div
-                  className={`booking-step-indicator ${step === s.number ? 'active' : step > s.number ? 'done' : ''}`}
+                  className="booking-step-indicator"
+                  style={{
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 'var(--text-sm)',
+                    fontWeight: 600,
+                    background: step === s.number || step > s.number ? 'var(--obsidian)' : 'var(--bg-primary)',
+                    color: step === s.number || step > s.number ? 'var(--cream)' : 'var(--slate-mid)',
+                    border: step === s.number || step > s.number ? '1px solid var(--obsidian)' : '1px solid var(--border)',
+                    transition: 'all 0.3s ease',
+                  }}
                   role="listitem"
                   aria-current={step === s.number ? 'step' : undefined}
                 >
@@ -132,7 +148,7 @@ export default function ReservationsClient() {
                 {i < steps.length - 1 && (
                   <div
                     className="booking-step-connector"
-                    style={{ background: step > s.number ? 'var(--gold)' : 'var(--border)', transition: 'background 0.3s' }}
+                    style={{ flex: 1, height: '1px', background: step > s.number ? 'var(--obsidian)' : 'var(--border)', transition: 'background 0.3s' }}
                   />
                 )}
               </div>
@@ -140,22 +156,23 @@ export default function ReservationsClient() {
           </div>
 
           <div
-            className="glass"
             style={{
-              borderRadius: 'var(--radius-xl)',
-              padding: 'var(--space-8)',
+              background: 'var(--bg-primary)',
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
+              padding: 'var(--space-10)',
             }}
           >
             {/* ── STEP 1: Party size + date ── */}
             {step === 1 && (
               <div>
-                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)' }}>
-                  <span aria-hidden="true"><Users size={22} style={{ display: 'inline', marginRight: '8px', color: 'var(--gold)' }} /></span>
+                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)', color: 'var(--obsidian)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                  <Users size={22} style={{ color: 'var(--slate-mid)' }} />
                   Party Size &amp; Date
                 </h2>
 
                 <div className="form-group" style={{ marginBottom: 'var(--space-6)' }}>
-                  <label className="form-label" id="party-size-label">Party Size</label>
+                  <label className="form-label" id="party-size-label" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Party Size</label>
                   <div
                     role="radiogroup"
                     aria-labelledby="party-size-label"
@@ -170,13 +187,13 @@ export default function ReservationsClient() {
                         style={{
                           width: '52px',
                           height: '52px',
-                          borderRadius: 'var(--radius-md)',
-                          border: form.partySize === n ? '2px solid var(--gold)' : '1px solid var(--border)',
-                          background: form.partySize === n ? 'var(--gold-subtle)' : 'var(--bg-card)',
-                          color: form.partySize === n ? 'var(--gold)' : 'var(--cream)',
-                          fontWeight: 700,
+                          borderRadius: '4px',
+                          border: '1px solid var(--border)',
+                          background: form.partySize === n ? 'var(--obsidian)' : 'var(--bg-primary)',
+                          color: form.partySize === n ? 'var(--cream)' : 'var(--slate-mid)',
+                          fontWeight: form.partySize === n ? 600 : 400,
                           fontSize: 'var(--text-lg)',
-                          transition: 'all var(--ease-fast)',
+                          transition: 'all 0.15s ease',
                           cursor: 'pointer',
                         }}
                       >
@@ -188,13 +205,15 @@ export default function ReservationsClient() {
                       style={{
                         padding: '0 var(--space-4)',
                         height: '52px',
-                        borderRadius: 'var(--radius-md)',
-                        border: form.partySize >= 9 ? '2px solid var(--gold)' : '1px solid var(--border)',
-                        background: form.partySize >= 9 ? 'var(--gold-subtle)' : 'var(--bg-card)',
-                        color: form.partySize >= 9 ? 'var(--gold)' : 'var(--muted)',
+                        borderRadius: '4px',
+                        border: '1px solid var(--border)',
+                        background: form.partySize >= 9 ? 'var(--obsidian)' : 'var(--bg-primary)',
+                        color: form.partySize >= 9 ? 'var(--cream)' : 'var(--slate-mid)',
                         fontSize: 'var(--text-sm)',
+                        fontWeight: form.partySize >= 9 ? 600 : 400,
                         cursor: 'pointer',
                         fontFamily: 'var(--font-body)',
+                        transition: 'all 0.15s ease',
                       }}
                     >
                       9+
@@ -203,8 +222,8 @@ export default function ReservationsClient() {
                 </div>
 
                 <div className="form-group" style={{ marginBottom: 'var(--space-8)' }}>
-                  <label className="form-label" htmlFor="booking-date">
-                    <Calendar size={13} style={{ display: 'inline', marginRight: '6px' }} />
+                  <label className="form-label" htmlFor="booking-date" style={{ color: 'var(--slate-mid)', fontWeight: 500, display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                    <Calendar size={14} />
                     Select Date
                   </label>
                   <input
@@ -215,6 +234,14 @@ export default function ReservationsClient() {
                     min={getTodayISO()}
                     onChange={(e) => set('date', e.target.value)}
                     required
+                    style={{ 
+                      width: '100%', 
+                      padding: 'var(--space-3)', 
+                      border: '1px solid var(--border)', 
+                      borderRadius: '4px', 
+                      background: 'var(--bg-primary)', 
+                      color: 'var(--obsidian)' 
+                    }}
                   />
                 </div>
 
@@ -222,7 +249,7 @@ export default function ReservationsClient() {
                   className="btn btn-primary btn-lg"
                   onClick={() => setStep(2)}
                   disabled={!form.date}
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', borderRadius: '4px' }}
                 >
                   Next: Choose Time &amp; Seating →
                 </button>
@@ -232,13 +259,13 @@ export default function ReservationsClient() {
             {/* ── STEP 2: Time + Seating ── */}
             {step === 2 && (
               <div>
-                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)' }}>
-                  <span aria-hidden="true"><Clock size={22} style={{ display: 'inline', marginRight: '8px', color: 'var(--gold)' }} /></span>
+                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)', color: 'var(--obsidian)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                  <Clock size={22} style={{ color: 'var(--slate-mid)' }} />
                   Time &amp; Seating
                 </h2>
 
-                <div className="form-group" style={{ marginBottom: 'var(--space-6)' }}>
-                  <label className="form-label" id="time-label">Preferred Time</label>
+                <div className="form-group" style={{ marginBottom: 'var(--space-8)' }}>
+                  <label className="form-label" id="time-label" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Preferred Time</label>
                   <div
                     role="radiogroup"
                     aria-labelledby="time-label"
@@ -252,15 +279,15 @@ export default function ReservationsClient() {
                         onClick={() => set('time', t)}
                         style={{
                           padding: 'var(--space-2) var(--space-4)',
-                          borderRadius: 'var(--radius-md)',
-                          border: form.time === t ? '2px solid var(--gold)' : '1px solid var(--border)',
-                          background: form.time === t ? 'var(--gold-subtle)' : 'var(--bg-card)',
-                          color: form.time === t ? 'var(--gold)' : 'var(--cream-dim)',
+                          borderRadius: '4px',
+                          border: '1px solid var(--border)',
+                          background: form.time === t ? 'var(--obsidian)' : 'var(--bg-primary)',
+                          color: form.time === t ? 'var(--cream)' : 'var(--slate-mid)',
                           fontSize: 'var(--text-sm)',
-                          fontWeight: 500,
+                          fontWeight: form.time === t ? 600 : 400,
                           cursor: 'pointer',
-                          fontFamily: 'var(--font-body)',
-                          transition: 'all var(--ease-fast)',
+                          fontFamily: 'var(--font-mono, monospace)',
+                          transition: 'all 0.15s ease',
                         }}
                       >
                         {t}
@@ -270,7 +297,7 @@ export default function ReservationsClient() {
                 </div>
 
                 <div className="form-group" style={{ marginBottom: 'var(--space-8)' }}>
-                  <label className="form-label" id="seating-label">Seating Preference</label>
+                  <label className="form-label" id="seating-label" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Seating Preference</label>
                   <div
                     role="radiogroup"
                     aria-labelledby="seating-label"
@@ -285,18 +312,31 @@ export default function ReservationsClient() {
                         role="radio"
                         aria-checked={form.seating === s.id}
                         tabIndex={0}
+                        style={{
+                          border: form.seating === s.id ? '2px solid var(--obsidian)' : '1px solid var(--border)',
+                          padding: 'var(--space-4)',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          background: form.seating === s.id ? 'var(--bg-secondary)' : 'var(--bg-primary)',
+                          transition: 'all 0.2s ease',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 'var(--space-2)'
+                        }}
                       >
-                        <div className="seating-card__icon">{s.icon}</div>
-                        <div className="seating-card__name">{s.name}</div>
-                        <div className="seating-card__desc">{s.desc}</div>
+                        <div style={{ color: form.seating === s.id ? 'var(--obsidian)' : 'var(--slate-mid)', marginBottom: 'var(--space-2)' }}>
+                          {s.icon}
+                        </div>
+                        <div style={{ color: 'var(--obsidian)', fontWeight: 600, fontSize: 'var(--text-base)' }}>{s.name}</div>
+                        <div style={{ color: 'var(--slate-mid)', fontSize: 'var(--text-sm)' }}>{s.desc}</div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', gap: 'var(--space-4)' }}>
-                  <button className="btn btn-ghost" onClick={() => setStep(1)}>← Back</button>
-                  <button className="btn btn-primary btn-lg" onClick={() => setStep(3)} style={{ flex: 1 }}>
+                  <button className="btn btn-secondary" onClick={() => setStep(1)} style={{ borderRadius: '4px' }}>← Back</button>
+                  <button className="btn btn-primary btn-lg" onClick={() => setStep(3)} style={{ flex: 1, borderRadius: '4px' }}>
                     Next: Your Details →
                   </button>
                 </div>
@@ -306,13 +346,14 @@ export default function ReservationsClient() {
             {/* ── STEP 3: Contact details ── */}
             {step === 3 && (
               <div>
-                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)' }}>
+                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)', color: 'var(--obsidian)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                  <Armchair size={22} style={{ color: 'var(--slate-mid)' }} />
                   Your Details
                 </h2>
 
                 <div style={{ display: 'grid', gap: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                   <div className="form-group">
-                    <label className="form-label" htmlFor="booking-name">Full Name</label>
+                    <label className="form-label" htmlFor="booking-name" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Full Name</label>
                     <input
                       type="text"
                       id="booking-name"
@@ -320,11 +361,12 @@ export default function ReservationsClient() {
                       placeholder="e.g. Sarah Molefe"
                       value={form.name}
                       onChange={(e) => set('name', e.target.value)}
+                      style={{ width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="booking-phone">Phone / WhatsApp</label>
+                    <label className="form-label" htmlFor="booking-phone" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Phone / WhatsApp</label>
                     <input
                       type="tel"
                       id="booking-phone"
@@ -332,11 +374,12 @@ export default function ReservationsClient() {
                       placeholder="+27 82 000 0000"
                       value={form.phone}
                       onChange={(e) => set('phone', e.target.value)}
+                      style={{ width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="booking-email">Email (optional)</label>
+                    <label className="form-label" htmlFor="booking-email" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Email (optional)</label>
                     <input
                       type="email"
                       id="booking-email"
@@ -344,27 +387,29 @@ export default function ReservationsClient() {
                       placeholder="you@email.com"
                       value={form.email}
                       onChange={(e) => set('email', e.target.value)}
+                      style={{ width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
                     />
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="booking-notes">Special Requests (optional)</label>
+                    <label className="form-label" htmlFor="booking-notes" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Special Requests (optional)</label>
                     <textarea
                       id="booking-notes"
                       className="form-textarea"
                       placeholder="Allergies, birthday decorations, high chair needed…"
                       value={form.notes}
                       onChange={(e) => set('notes', e.target.value)}
+                      style={{ width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)', minHeight: '100px' }}
                     />
                   </div>
                 </div>
 
                 <div style={{ display: 'flex', gap: 'var(--space-4)' }}>
-                  <button className="btn btn-ghost" onClick={() => setStep(2)}>← Back</button>
+                  <button className="btn btn-secondary" onClick={() => setStep(2)} style={{ borderRadius: '4px' }}>← Back</button>
                   <button
                     className="btn btn-primary btn-lg"
                     onClick={() => setStep(4)}
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, borderRadius: '4px' }}
                     disabled={!form.name || !form.phone}
                   >
                     Review Booking →
@@ -376,17 +421,18 @@ export default function ReservationsClient() {
             {/* ── STEP 4: Confirm ── */}
             {step === 4 && (
               <div>
-                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)' }}>
+                <h2 className="text-heading-card" style={{ marginBottom: 'var(--space-8)', color: 'var(--obsidian)', display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                  <CheckCircle size={22} style={{ color: 'var(--slate-mid)' }} />
                   Confirm Your Reservation
                 </h2>
 
                 <div
                   style={{
-                    background: 'var(--gold-subtle)',
-                    border: '1px solid rgba(212,175,55,0.25)',
-                    borderRadius: 'var(--radius-lg)',
+                    background: 'var(--bg-secondary)',
+                    border: '1px solid var(--border)',
+                    borderRadius: '8px',
                     padding: 'var(--space-6)',
-                    marginBottom: 'var(--space-6)',
+                    marginBottom: 'var(--space-8)',
                   }}
                 >
                   {[
@@ -404,32 +450,31 @@ export default function ReservationsClient() {
                   ]
                     .filter(Boolean)
                     .map((row) => (
-                      <div key={row!.label} style={{ display: 'flex', justifyContent: 'space-between', paddingBlock: 'var(--space-3)', borderBottom: '1px solid rgba(212,175,55,0.15)' }}>
-                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--muted)' }}>{row!.label}</span>
-                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--cream)', fontWeight: 600 }}>{row!.value}</span>
+                      <div key={row!.label} style={{ display: 'flex', justifyContent: 'space-between', paddingBlock: 'var(--space-3)', borderBottom: '1px solid var(--border)' }}>
+                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--slate-mid)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)' }}>{row!.label}</span>
+                        <span style={{ fontSize: 'var(--text-sm)', color: 'var(--obsidian)', fontWeight: 600 }}>{row!.value}</span>
                       </div>
                     ))}
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-                  {/* WhatsApp CTA — primary booking path */}
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-whatsapp btn-lg"
-                    style={{ justifyContent: 'center' }}
+                    className="btn btn-primary btn-lg"
+                    style={{ justifyContent: 'center', borderRadius: '4px' }}
                     onClick={() => setSubmitted(true)}
                   >
                     <MessageCircle size={20} />
                     Confirm via WhatsApp (Instant)
                   </a>
 
-                  <p style={{ textAlign: 'center', fontSize: 'var(--text-xs)', color: 'var(--muted)' }}>
-                    Clicking will open WhatsApp with your booking details pre-filled
+                  <p style={{ textAlign: 'center', fontSize: 'var(--text-xs)', color: 'var(--slate-mid)' }}>
+                    Clicking will open WhatsApp with your booking details pre-filled.
                   </p>
 
-                  <button className="btn btn-ghost" onClick={() => setStep(3)}>← Edit Details</button>
+                  <button className="btn btn-secondary" onClick={() => setStep(3)} style={{ borderRadius: '4px' }}>← Edit Details</button>
                 </div>
               </div>
             )}
@@ -437,26 +482,32 @@ export default function ReservationsClient() {
 
           {/* Private functions CTA */}
           <div
-            className="glass"
             style={{
-              borderRadius: 'var(--radius-xl)',
+              border: '1px solid var(--border)',
+              borderRadius: '8px',
               padding: 'var(--space-8)',
               marginTop: 'var(--space-8)',
-              textAlign: 'center',
+              background: 'var(--bg-secondary)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
             }}
           >
-            <div style={{ fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-4)' }}>🎂</div>
-            <h3 className="text-heading-card" style={{ marginBottom: 'var(--space-3)' }}>
+            <span style={{ fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', color: 'var(--slate-mid)', marginBottom: 'var(--space-2)' }}>
+              Large Groups
+            </span>
+            <h3 className="text-heading-card" style={{ marginBottom: 'var(--space-3)', color: 'var(--obsidian)', fontSize: 'var(--text-2xl)' }}>
               Private Functions &amp; Birthdays
             </h3>
-            <p className="text-body" style={{ maxWidth: '420px', marginInline: 'auto', marginBottom: 'var(--space-5)' }}>
+            <p className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-6)', maxWidth: '480px' }}>
               Planning a celebration for 10+ guests? We cater for private dining experiences, office year-ends, and milestone birthdays.
             </p>
             <a
-              href={`https://wa.me/27114251668?text=${encodeURIComponent('Hi, I\'d like to enquire about a private function at On Sixth Restaurant. 🎉')}`}
+              href={`https://wa.me/27114251668?text=${encodeURIComponent('Hi, I\'d like to enquire about a private function at On Sixth Restaurant.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-secondary"
+              style={{ borderRadius: '4px' }}
             >
               <MessageCircle size={16} />
               Enquire via WhatsApp

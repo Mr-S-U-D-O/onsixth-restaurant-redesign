@@ -10,31 +10,40 @@ export const metadata: Metadata = {
 export default function ReservationsPage() {
   return (
     <>
-      {/* Hero */}
+      {/* Strict Typography Hero */}
       <div
         style={{
-          paddingTop: 'var(--space-24)',
-          paddingBottom: 'var(--space-10)',
-          background: `
-            radial-gradient(ellipse 60% 70% at 50% 100%, rgba(212,175,55,0.08) 0%, transparent 70%),
-            var(--slate-deep)
-          `,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          background: 'var(--bg-primary)',
+          paddingTop: 'var(--space-32)',
+          paddingBottom: 'var(--space-20)',
           borderBottom: '1px solid var(--border)',
-          textAlign: 'center',
         }}
       >
-        <div className="container">
-          <span className="text-subheading" style={{ display: 'block', marginBottom: 'var(--space-4)' }}>
-            Your Experience Awaits
-          </span>
-          <h1 className="text-heading-section" style={{ marginBottom: 'var(--space-4)' }}>
-            Reserve Your Table
-          </h1>
-          <span className="divider-gold center" />
-          <p
-            className="text-body"
-            style={{ marginTop: 'var(--space-5)', maxWidth: '480px', marginInline: 'auto' }}
+        <div className="container" style={{ maxWidth: 'var(--container-md)', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)', marginInline: 'auto', marginBottom: 'var(--space-6)' }}>
+            <div style={{ width: '32px', height: '1px', background: 'var(--obsidian)' }} />
+            <span style={{ fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', fontWeight: 600, color: 'var(--slate-mid)' }}>
+              Your Experience Awaits
+            </span>
+            <div style={{ width: '32px', height: '1px', background: 'var(--obsidian)' }} />
+          </div>
+          
+          <h1
+            className="text-heading-hero"
+            style={{ 
+              color: 'var(--obsidian)',
+              marginBottom: 'var(--space-8)',
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              lineHeight: 1.05
+            }}
           >
+            Reserve Your Table.
+          </h1>
+          
+          <p className="text-body" style={{ fontSize: 'var(--text-lg)', color: 'var(--slate-mid)', maxWidth: '480px', marginInline: 'auto' }}>
             Step into Benoni&apos;s favourite dining destination. We recommend booking ahead, especially on Fridays and Saturdays.
           </p>
         </div>
