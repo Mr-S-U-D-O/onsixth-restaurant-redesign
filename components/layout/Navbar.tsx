@@ -105,9 +105,9 @@ export default function Navbar() {
             <Link
               href="/"
               aria-label="On Sixth Restaurant — Home"
-              style={{ display: 'flex', alignItems: 'center', height: scrolled ? '36px' : '48px', position: 'relative', zIndex: 10, transition: 'height var(--ease-normal)' }}
+              style={{ display: 'flex', alignItems: 'center', height: scrolled ? '36px' : '64px', position: 'relative', zIndex: 10, transition: 'height var(--ease-normal)' }}
             >
-              <img src="/logo.svg" alt="" aria-hidden="true" style={{ height: '100%', width: 'auto' }} />
+              <img src="/logo.jpg" alt="" aria-hidden="true" style={{ height: '100%', width: 'auto', objectFit: 'contain' }} />
             </Link>
 
             {/* Desktop Nav */}

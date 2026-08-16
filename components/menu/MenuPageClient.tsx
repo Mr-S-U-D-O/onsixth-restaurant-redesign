@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { menuData, type DietaryTag, type MenuItem, type MenuCategory } from '@/lib/menu-data';
 import { formatPrice } from '@/lib/time-utils';
 import { X, Download, Wine, Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // ── Dietary filter config ──
 const FILTERS: { tag: DietaryTag; label: string; abbr: string }[] = [
@@ -180,14 +181,60 @@ function DishModal({
   );
 }
 
+// ── Hover Image Preview ─────────────────────────────────────────
+function HoverImagePreview({ activeItem, mousePos }: { activeItem: string | null, mousePos: { x: number, y: number } }) {
+  if (!activeItem) return null;
+  
+  // We use placeholder images based on category or item if possible, fallback to hero_fire
+  let bgImg = '/hero_fire.jpg';
+  if (activeItem.includes('sushi') || activeItem.includes('salmon')) bgImg = '/premium_sushi_1786904503100.jpg';
+  if (activeItem.includes('pizza') || activeItem.includes('pizzaladiere')) bgImg = '/premium_pizza_1786904516168.jpg';
+
+  return (
+    <motion.div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        zIndex: 100,
+        width: '240px',
+        height: '300px',
+        borderRadius: '4px',
+        backgroundImage: `url('${bgImg}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        border: '1px solid var(--border)',
+        boxShadow: '0 24px 48px rgba(0,0,0,0.2)'
+      }}
+      animate={{
+        x: mousePos.x + 20,
+        y: mousePos.y + 20,
+        opacity: activeItem ? 1 : 0,
+        scale: activeItem ? 1 : 0.9,
+        rotate: activeItem ? (mousePos.x % 10 - 5) : 0 // subtle tilt
+      }}
+      initial={{ opacity: 0, scale: 0.9, rotate: 0 }}
+      transition={{ type: 'spring', damping: 25, stiffness: 250, mass: 0.5 }}
+    />
+  );
+}
+
 // ── Main Client Component ───────────────────────────────────────
 export default function MenuPageClient() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [activeFilters, setActiveFilters] = useState<Set<DietaryTag>>(new Set());
   const [selectedDish, setSelectedDish] = useState<{ item: MenuItem; cat: string } | null>(null);
   
+  const [hoverItem, setHoverItem] = useState<string | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
   const categoryRefs = useRef<Record<string, HTMLElement | null>>({});
   const triggerRef = useRef<HTMLElement | null>(null);
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
 
   const toggleFilter = (tag: DietaryTag) => {
     setActiveFilters((prev) => {
@@ -216,8 +263,10 @@ export default function MenuPageClient() {
     .map((cat) => ({ ...cat, items: getFilteredItems(cat.items) }))
     .filter((cat) => cat.items.length > 0);
 
+  // We need to import motion for the hover preview. Since it might not be imported yet, we'll do it via require or just add it to the top.
+  // Wait, I can just use 'framer-motion' if it's imported.
   return (
-    <>
+    <div onPointerMove={handlePointerMove}>
       {/* Editorial Filter Block */}
       <div className="container" style={{ paddingTop: 'var(--space-20)', paddingBottom: 'var(--space-8)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--space-8)' }}>
@@ -287,8 +336,36 @@ export default function MenuPageClient() {
 
       {/* Menu Categories */}
       <div className="container" style={{ paddingBlock: 'var(--space-16)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 'var(--space-24)' }}>
-          {filteredCategories.length === 0 ? (
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 250px) 1fr', gap: 'var(--space-16)', alignItems: 'start' }}>
+          
+          {/* Sticky Sidebar */}
+          <aside style={{ position: 'sticky', top: '160px', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--slate-mid)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', marginBottom: 'var(--space-4)' }}>Sections</div>
+            {filteredCategories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => scrollToCategory(cat.id)}
+                style={{
+                  textAlign: 'left',
+                  padding: 'var(--space-2) 0',
+                  fontSize: 'var(--text-sm)',
+                  color: activeCategory === cat.id ? 'var(--obsidian)' : 'var(--slate-mid)',
+                  fontWeight: activeCategory === cat.id ? 600 : 400,
+                  textTransform: 'uppercase',
+                  letterSpacing: 'var(--tracking-widest)',
+                  borderBottom: '1px solid',
+                  borderColor: activeCategory === cat.id ? 'var(--obsidian)' : 'transparent',
+                  transition: 'all 0.2s',
+                  width: 'fit-content'
+                }}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </aside>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-24)' }}>
+            {filteredCategories.length === 0 ? (
             <div style={{ padding: 'var(--space-16) 0', color: 'var(--slate-mid)' }}>No dishes match the selected filters.</div>
           ) : (
             filteredCategories.map((cat) => (
@@ -305,6 +382,8 @@ export default function MenuPageClient() {
                       style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}
                       onClick={(e) => { triggerRef.current = e.currentTarget; setSelectedDish({ item, cat: cat.name }); }}
                       onKeyDown={(e) => { if (e.key === 'Enter') { triggerRef.current = e.currentTarget; setSelectedDish({ item, cat: cat.name }); } }}
+                      onPointerEnter={() => setHoverItem(item.name.toLowerCase())}
+                      onPointerLeave={() => setHoverItem(null)}
                       tabIndex={0}
                       role="button"
                       aria-label={`View details for ${item.name}`}
@@ -336,6 +415,7 @@ export default function MenuPageClient() {
               </section>
             ))
           )}
+          </div>
         </div>
       </div>
 
@@ -347,6 +427,9 @@ export default function MenuPageClient() {
           triggerRef={triggerRef}
         />
       )}
-    </>
+      
+      {/* We need framer-motion imported for HoverImagePreview to work without error. I will use a trick below or fix imports if needed. */}
+      {hoverItem && <HoverImagePreview activeItem={hoverItem} mousePos={mousePos} />}
+    </div>
   );
 }

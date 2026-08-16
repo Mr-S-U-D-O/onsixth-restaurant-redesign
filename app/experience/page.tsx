@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Clock, Plus, MoveRight } from 'lucide-react';
+import TextReveal from '@/components/ui/TextReveal';
 
 export const metadata: Metadata = {
   title: 'Our Story & Heritage',
@@ -74,7 +75,7 @@ export default function ExperiencePage() {
               lineHeight: 1.05
             }}
           >
-            Refined for the Modern Palate.
+            Refined for the Modern <span className="text-highlight">Palate.</span>
           </h1>
           
           <p className="text-body" style={{ fontSize: 'var(--text-lg)', color: 'var(--slate-mid)', maxWidth: '480px' }}>
@@ -103,12 +104,12 @@ export default function ExperiencePage() {
               <h2 className="text-heading-section" style={{ color: 'var(--obsidian)', fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-6)' }}>
                 Walls That Tell Stories
               </h2>
-              <p className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-4)' }}>
-                Step inside On Sixth and you&apos;ll see them immediately — authentic mining-era newspaper clippings, sepia photographs, and vintage Benoni memorabilia covering every surface. This isn&apos;t decoration. It&apos;s devotion.
-              </p>
-              <p className="text-body" style={{ color: 'var(--slate-mid)' }}>
-                Benoni was built on gold, community, and the pioneering spirit of people who believed in something bigger than themselves. That&apos;s the energy we carry into our kitchen every day.
-              </p>
+              <TextReveal className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-4)' }}>
+                Step inside On Sixth and you'll see them immediately — authentic mining-era newspaper clippings, sepia photographs, and vintage Benoni memorabilia covering every surface. This isn't decoration. It's devotion.
+              </TextReveal>
+              <TextReveal className="text-body" style={{ color: 'var(--slate-mid)' }}>
+                Benoni was built on gold, community, and the pioneering spirit of people who believed in something bigger than themselves. That's the energy we carry into our kitchen every day.
+              </TextReveal>
             </div>
 
             {/* Card 2 */}
@@ -126,12 +127,12 @@ export default function ExperiencePage() {
               <h2 className="text-heading-section" style={{ color: 'var(--obsidian)', fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-6)' }}>
                 Nothing to Hide
               </h2>
-              <p className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-4)' }}>
+              <TextReveal className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-4)' }}>
                 Our entire kitchen is open to you. Watch the salmon get sliced. See the pizza dough get stretched over the oblong stone. Watch the cocktails get built layer by layer at the bar.
-              </p>
-              <p className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-8)' }}>
-                We believe transparency creates trust. And trust creates loyalty. Over 7 years, our regulars have become family — because they&apos;ve seen exactly how much care goes into every plate.
-              </p>
+              </TextReveal>
+              <TextReveal className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-8)' }}>
+                We believe transparency creates trust. And trust creates loyalty. Over 7 years, our regulars have become family — because they've seen exactly how much care goes into every plate.
+              </TextReveal>
               <div style={{ marginTop: 'auto', display: 'flex', gap: 'var(--space-3)' }}>
                 <Link href="/menu" style={{ fontSize: 'var(--text-sm)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 'var(--space-2)', color: 'var(--obsidian)' }}>
                   Explore Menu <MoveRight size={14} />

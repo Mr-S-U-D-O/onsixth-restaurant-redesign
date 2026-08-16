@@ -135,64 +135,6 @@
   text-transform: uppercase;
 }
 
-.badge-gold {
-  background: var(--gold-subtle);
-  color: var(--gold);
-  border: 1px solid rgba(212,175,55,0.25);
-}
-
-.badge-vegan {
-  background: rgba(34,197,94,0.12);
-  color: #4ade80;
-  border: 1px solid rgba(34,197,94,0.25);
-}
-
-.badge-gf {
-  background: rgba(251,191,36,0.12);
-  color: #fbbf24;
-  border: 1px solid rgba(251,191,36,0.25);
-}
-
-.badge-spicy {
-  background: rgba(239,68,68,0.12);
-  color: #f87171;
-  border: 1px solid rgba(239,68,68,0.25);
-}
-
-.badge-chef {
-  background: rgba(212,175,55,0.15);
-  color: var(--gold);
-  border: 1px solid rgba(212,175,55,0.3);
-}
-
-.badge-open {
-  background: rgba(34,197,94,0.15);
-  color: #4ade80;
-  border: 1px solid rgba(34,197,94,0.3);
-}
-
-.badge-closed {
-  background: rgba(239,68,68,0.12);
-  color: #f87171;
-  border: 1px solid rgba(239,68,68,0.25);
-}
-
-.badge-open::before,
-.badge-closed::before {
-  content: '';
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: currentColor;
-  animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
 /* ═══════════════════════════════════════
    DISH CARD
 ═══════════════════════════════════════ */
@@ -207,9 +149,8 @@
 }
 
 .dish-card:hover {
-  border-color: var(--teal);
+  border-color: var(--obsidian);
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
 }
 
 .dish-card__image-wrap {
@@ -376,14 +317,15 @@
 .form-input,
 .form-select,
 .form-textarea {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  border-radius: 0;
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: var(--text-base);
-  padding: var(--space-3) var(--space-4);
-  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
+  padding: var(--space-3) var(--space-2);
+  transition: border-color var(--ease-fast);
   width: 100%;
 }
 
@@ -391,8 +333,7 @@
 .form-select:focus,
 .form-textarea:focus {
   outline: none;
-  border-color: var(--gold-dim);
-  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+  border-color: var(--obsidian);
 }
 
 .form-input::placeholder,

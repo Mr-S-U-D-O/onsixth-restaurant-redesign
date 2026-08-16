@@ -311,3 +311,24 @@
   transform: rotate(-1deg);
   border-radius: 1px;
 }
+
+/* ── Custom Brutalist Scrollbar ── */
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+  border-left: 1px solid var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--obsidian);
+  border: 1px solid var(--obsidian);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+}

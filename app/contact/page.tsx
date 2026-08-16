@@ -62,7 +62,7 @@ export default function ContactPage() {
               lineHeight: 1.05
             }}
           >
-            Find Us.
+            Find <span className="text-highlight">Us.</span>
           </h1>
         </div>
       </div>

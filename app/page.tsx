@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useVelocity, useSpring, useMotionValue, useAnimationFrame } from "framer-motion";
 import { useRef } from "react";
 import MagneticButton from "@/components/ui/MagneticButton";
 import ReviewsCarousel from "@/components/home/ReviewsCarousel";
@@ -113,17 +113,23 @@ function Hero() {
               width: "clamp(80px, 15vw, 160px)", 
               height: "clamp(40px, 7vw, 80px)", 
               borderRadius: "999px",
-              backgroundImage: "url('/hero_fire.jpg')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              overflow: "hidden",
               margin: "0 16px",
               verticalAlign: "middle",
-              border: "1px solid var(--border)"
+              border: "1px solid var(--border)",
+              position: "relative"
             }} 
-            role="img" 
-            aria-label="Roaring fire in the open kitchen"
-          />
-          <br />Meets Heritage.
+          >
+            <video 
+              src="/Chefs_working_in_restaurant_kitchen_202608170023.mp4" 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} 
+            />
+          </span>
+          <br />Meets <span className="text-highlight">Heritage.</span>
         </motion.h1>
       </motion.div>
 
@@ -168,6 +174,42 @@ const AWARDS = [
 ];
 
 function AwardsStrip() {
+  const baseX = useMotionValue(0);
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+    clamp: false
+  });
+
+  const directionFactor = useRef<number>(1);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useAnimationFrame((t, delta) => {
+    let moveBy = directionFactor.current * -1 * (delta / 1000) * 10;
+    
+    if (velocityFactor.get() < 0) {
+      directionFactor.current = -1;
+    } else if (velocityFactor.get() > 0) {
+      directionFactor.current = 1;
+    }
+    
+    moveBy += directionFactor.current * moveBy * velocityFactor.get();
+    
+    let currentX = baseX.get() + moveBy;
+    // Wrap between 0 and -50% for the duplicate array
+    if (currentX <= -50) currentX = 0;
+    if (currentX > 0) currentX = -50;
+    
+    baseX.set(currentX);
+    if (marqueeRef.current) {
+      marqueeRef.current.style.transform = `translateX(${currentX}%)`;
+    }
+  });
+
   return (
     <section
       aria-label="Awards and accolades"
@@ -181,10 +223,9 @@ function AwardsStrip() {
       }}
     >
       <div className="marquee-container" style={{ display: "flex", width: "100%", overflow: "hidden", whiteSpace: "nowrap" }}>
-        <motion.div 
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
-          style={{ display: "flex", gap: "var(--space-12)", minWidth: "200%" }}
+        <div 
+          ref={marqueeRef}
+          style={{ display: "flex", gap: "var(--space-12)", minWidth: "200%", willChange: "transform" }}
         >
           {/* Duplicate array for seamless looping */}
           {[...AWARDS, ...AWARDS].map((award, i) => (
@@ -205,7 +246,7 @@ function AwardsStrip() {
               <span aria-hidden="true" style={{ color: "var(--teal)", fontSize: "1.2rem" }}>•</span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -144,7 +144,7 @@ export default function FloatingWidget() {
   };
 
   return (
-    <div style={{ position: 'fixed', bottom: 'var(--space-6)', right: 'var(--space-6)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 'var(--space-4)' }}>
+    <div style={{ position: 'fixed', bottom: 'var(--space-6)', left: 'var(--space-6)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 'var(--space-4)' }}>
       
       {/* Chat Window */}
       <AnimatePresence>
@@ -255,9 +255,9 @@ export default function FloatingWidget() {
               {isTyping && (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: 'var(--space-4)', background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: '0 8px 8px 8px', width: 'fit-content' }}>
-                    <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0 }} style={{ width: '5px', height: '5px', background: 'var(--obsidian)', borderRadius: '50%' }} />
-                    <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} style={{ width: '5px', height: '5px', background: 'var(--obsidian)', borderRadius: '50%' }} />
-                    <motion.div animate={{ opacity: [0.3, 1, 0.3] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} style={{ width: '5px', height: '5px', background: 'var(--obsidian)', borderRadius: '50%' }} />
+                    <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0 }} style={{ width: '6px', height: '6px', background: 'var(--obsidian)', borderRadius: '0' }} />
+                    <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0.15 }} style={{ width: '6px', height: '6px', background: 'var(--obsidian)', borderRadius: '0' }} />
+                    <motion.div animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0.3 }} style={{ width: '6px', height: '6px', background: 'var(--obsidian)', borderRadius: '0' }} />
                   </div>
                 </div>
               )}

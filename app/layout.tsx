@@ -19,9 +19,9 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import DayNightController from '@/components/ui/DayNightController';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import FloatingWidget from '@/components/ui/FloatingWidget';
+import Preloader from '@/components/ui/Preloader';
 import { buildRestaurantSchema } from '@/lib/schema';
 
 const schema = buildRestaurantSchema();
@@ -112,7 +112,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <DayNightController />
+        <Preloader />
         <ScrollReveal />
         <Navbar />
         <main id="main-content">{children}</main>
