@@ -221,8 +221,9 @@ function HoverImagePreview({ activeItem, mousePos }: { activeItem: MenuItem | nu
         border: '1px solid var(--border)',
         boxShadow: '0 16px 40px rgba(0,0,0,0.28)',
         background: 'var(--obsidian)',
-        // Use CSS transform directly — no spring lag from screen edge
-        transform: `translate(${x}px, ${y}px)`,
+        // Pass x and y to framer-motion so it combines correctly with scale
+        x: x,
+        y: y,
       }}
       key={activeItem.id}
       initial={{ opacity: 0, scale: 0.94 }}
