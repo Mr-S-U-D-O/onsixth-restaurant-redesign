@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
-import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
 import '@/styles/design-system.css';
 import '@/styles/components.css';
 import '@/styles/animations.css';
+import { Outfit, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -14,18 +14,15 @@ import { buildRestaurantSchema } from '@/lib/schema';
 
 const outfit = Outfit({
   subsets: ['latin'],
+  display: 'swap',
   variable: '--font-outfit',
-  display: 'swap',
-  preload: true,
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-plus-jakarta',
   display: 'swap',
-  preload: false,
+  variable: '--font-sans',
 });
-
 const schema = buildRestaurantSchema();
 
 export const metadata: Metadata = {
@@ -121,7 +118,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en-ZA" className={`${outfit.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
+    <html lang="en-ZA" suppressHydrationWarning>
       <head>
         <Script
           id="restaurant-schema"
@@ -130,6 +127,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <meta name="format-detection" content="telephone=yes" />
@@ -138,7 +136,7 @@ export default function RootLayout({
         <meta name="geo.position" content="-26.1867;28.3089" />
         <meta name="ICBM" content="-26.1867, 28.3089" />
       </head>
-      <body>
+      <body className={`${outfit.variable} ${jakarta.variable}`}>
         {/* Skip to main content — accessibility */}
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <Preloader />

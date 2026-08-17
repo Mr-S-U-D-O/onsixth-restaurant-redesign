@@ -318,7 +318,7 @@ export default function FloatingWidget() {
               </div>
               <div style={{ textAlign: 'center', marginTop: 'var(--space-3)' }}>
                 <span style={{ fontSize: '9px', color: 'var(--slate-mid)', letterSpacing: '0.02em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
-                  <Command size={10} /> PREFERRED: TYPE "/" TO OPEN
+                  <Command size={10} /> PREFERRED: TYPE &quot;/&quot; TO OPEN
                 </span>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import { hasIntent } from './nlp';
-import { checkAllergens, WINE_PAIRINGS, MENU_DATA } from './menuData';
+import { checkAllergens, WINE_PAIRINGS } from './menuData';
 
 export type ChatState = {
   userName: string | null;
@@ -45,9 +45,7 @@ function getTimeOfDayGreeting(): string {
 }
 
 export function processInput(input: string, currentState: ChatState, pathname: string): EngineResponse {
-  let state = { ...currentState };
-  let responseText = "";
-  let suggestions: string[] = ["View menu highlights", "Where are you located?"];
+  const state = { ...currentState };
 
   const normalized = input.toLowerCase();
 
@@ -104,7 +102,7 @@ export function processInput(input: string, currentState: ChatState, pathname: s
   if (nameMatch) {
     const name = nameMatch[1] || nameMatch[2] || nameMatch[3];
     state.userName = name.charAt(0).toUpperCase() + name.slice(1);
-    responseText = `Nice to meet you, ${state.userName}! How can I assist you today?`;
+    const responseText = `Nice to meet you, ${state.userName}! How can I assist you today?`;
     return { text: responseText, suggestions: ["Book a table", "View menu"], newState: state };
   }
 

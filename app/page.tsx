@@ -152,13 +152,13 @@ function Hero() {
         </MagneticButton>
       </motion.div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 1024px) {
           .text-body {
             text-align: left !important;
           }
         }
-      `}</style>
+      `}} />
     </section>
   );
 }
@@ -188,7 +188,7 @@ function AwardsStrip() {
   const directionFactor = useRef<number>(1);
   const marqueeRef = useRef<HTMLDivElement>(null);
 
-  useAnimationFrame((t, delta) => {
+  useAnimationFrame((t: number, delta: number) => {
     let moveBy = directionFactor.current * -1 * (delta / 1000) * 10;
     
     if (velocityFactor.get() < 0) {
@@ -416,7 +416,7 @@ function CulinaryCascade() {
           </div>
         </div>
       </div>
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (min-width: 768px) {
           .pizza-text {
             order: 1 !important;
@@ -425,7 +425,7 @@ function CulinaryCascade() {
             order: 2 !important;
           }
         }
-      `}</style>
+      `}} />
     </section>
   );
 }
@@ -523,13 +523,11 @@ function OpenKitchenTheatre() {
           </motion.div>
         </div>
       </div>
-      <style jsx>{`
-        @media (max-width: 1024px) {
-          .kitchen-grid {
-            grid-template-columns: 1fr !important;
-          }
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 768px) {
+          .grid-2 { grid-template-columns: 1fr !important; }
         }
-      `}</style>
+      `}} />
     </section>
   );
 }

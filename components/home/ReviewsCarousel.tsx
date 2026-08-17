@@ -62,7 +62,7 @@ export default function ReviewsCarousel() {
               opacity: 0.5,
               zIndex: 0
             }}>
-              "
+              &ldquo;
             </span>
             <AnimatePresence mode="wait">
               <motion.div
@@ -158,7 +158,7 @@ export default function ReviewsCarousel() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .lg\\:grid-cols-12 {
           display: grid;
         }
@@ -174,7 +174,7 @@ export default function ReviewsCarousel() {
             padding-left: var(--space-12);
           }
         }
-      `}</style>
+      `}} />
     </section>
   );
 }

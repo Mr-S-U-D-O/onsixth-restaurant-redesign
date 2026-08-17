@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Clock, Plus, MoveRight } from 'lucide-react';
+import { Clock, MoveRight } from 'lucide-react';
 import TextReveal from '@/components/ui/TextReveal';
 
 export const metadata: Metadata = {
@@ -108,10 +108,10 @@ export default function ExperiencePage() {
                 Walls That Tell Stories
               </h2>
               <TextReveal className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-4)' }}>
-                Step inside On Sixth and you'll see them immediately — authentic mining-era newspaper clippings, sepia photographs, and vintage Benoni memorabilia covering every surface. This isn't decoration. It's devotion.
+                Step inside On Sixth and you&apos;ll see them immediately — authentic mining-era newspaper clippings, sepia photographs, and vintage Benoni memorabilia covering every surface. This isn&apos;t decoration. It&apos;s devotion.
               </TextReveal>
               <TextReveal className="text-body" style={{ color: 'var(--slate-mid)' }}>
-                Benoni was built on gold, community, and the pioneering spirit of people who believed in something bigger than themselves. That's the energy we carry into our kitchen every day.
+                Benoni was built on gold, community, and the pioneering spirit of people who believed in something bigger than themselves. That&apos;s the energy we carry into our kitchen every day.
               </TextReveal>
             </div>
 
@@ -134,7 +134,7 @@ export default function ExperiencePage() {
                 Our entire kitchen is open to you. Watch the salmon get sliced. See the pizza dough get stretched over the oblong stone. Watch the cocktails get built layer by layer at the bar.
               </TextReveal>
               <TextReveal className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-8)' }}>
-                We believe transparency creates trust. And trust creates loyalty. Over 7 years, our regulars have become family — because they've seen exactly how much care goes into every plate.
+                We believe transparency creates trust. And trust creates loyalty. Over 7 years, our regulars have become family — because they&apos;ve seen exactly how much care goes into every plate.
               </TextReveal>
               <div style={{ marginTop: 'auto', display: 'flex', gap: 'var(--space-3)' }}>
                 <Link href="/menu" style={{ fontSize: 'var(--text-sm)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 'var(--space-2)', color: 'var(--obsidian)' }}>

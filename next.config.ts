@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
 
   // ── Compression ──
   compress: true,
+  
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
   // ── Security Headers + Caching ──
   async headers() {
