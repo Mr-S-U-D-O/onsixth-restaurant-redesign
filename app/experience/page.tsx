@@ -6,7 +6,10 @@ import TextReveal from '@/components/ui/TextReveal';
 export const metadata: Metadata = {
   title: 'Our Story & Heritage',
   description:
-    'Discover On Sixth\'s story — a tribute to Benoni\'s 19th century gold-rush heritage, combined with 21st century gastronomy. Meet our open kitchen philosophy and culinary journey.',
+    "Discover On Sixth's story — a tribute to Benoni's 19th century gold-rush heritage, combined with 21st century gastronomy. Meet our open kitchen philosophy and culinary journey.",
+  alternates: {
+    canonical: 'https://onsixthrestaurant.co.za/experience',
+  },
 };
 
 const TIMELINE = [

@@ -1,23 +1,34 @@
-# On Sixth Restaurant — Digital Transformation
+# On Sixth Restaurant — Official Website
 
-> **Benoni's premier dining destination** — a complete ground-up website rebuild targeting Lighthouse 98+, with an interactive digital menu, WhatsApp booking, and a heritage-driven design system.
+> **Benoni's premier dining destination** — a full-stack Next.js website featuring an interactive digital menu, WhatsApp table booking, Google-rich structured data, and a heritage-driven design system. Production-ready.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
-[![Deployed on Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange?logo=cloudflare)](https://pages.cloudflare.com)
+[![License](https://img.shields.io/badge/License-Private-red)](./LICENSE)
 
 ---
 
-## 🎯 Project Goals
+## 🏆 Awards
 
-| Before | After |
+- **Best Upmarket Restaurant** — Best of Ekurhuleni Readers' Choice
+- **Best Romantic Restaurant** — Best of Ekurhuleni Readers' Choice
+- **Best Neighbourhood Restaurant** — Best of Ekurhuleni Readers' Choice
+- ⭐ **4.8/5** across 1,200+ reviews
+
+---
+
+## 🎯 What's Included
+
+| Feature | Description |
 |---|---|
-| Lighthouse Performance: 71/100 | Target: **98+** |
-| Static PDF menu | **Interactive filterable digital menu** |
-| Broken Google Maps API | **Custom dark-theme map embed** |
-| No online booking | **Multi-step WhatsApp booking** |
-| 6.7s Speed Index | Target: **< 1.2s** |
-| 2021 copyright | **Live open/close status** |
+| Interactive Menu | Filterable dish grid with hover image previews, dietary toggles, and chef's notes modals |
+| WhatsApp Booking | Multi-step reservation form → pre-filled WhatsApp message |
+| SEO & Rich Data | JSON-LD (Restaurant + Menu + Breadcrumb schemas), sitemap.xml, robots.txt |
+| AI-Visibility | Geo meta tags, OpenGraph, Twitter Cards, canonical URLs on all pages |
+| Accessibility | WCAG 2.1 AA, skip-to-content, ARIA labels, keyboard nav, focus traps |
+| Performance | AVIF/WebP images, long-term cache headers, font preload, compressed static assets |
+| Live Status | Real-time open/closed badge based on SAST business hours |
+| Chatbot | Intelligent on-site assistant for FAQs, menu queries, and bookings |
 
 ---
 
@@ -25,58 +36,59 @@
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | Language | TypeScript 5 |
 | Styling | Vanilla CSS + CSS Custom Properties |
 | Animations | Framer Motion + CSS keyframes |
-| Maps | Google Maps embed (dark-themed) |
+| Maps | Google Maps embed (greyscale) |
 | Icons | Lucide React |
+| Fonts | Outfit + Plus Jakarta Sans (Google Fonts) |
 | Package Manager | npm |
-| Deployment | Cloudflare Pages |
+| Deployment | Cloudflare Pages (recommended) |
 
 ---
 
 ## 🎨 Design System
 
 **Colour Palette:**
-- `#121316` — Rich Obsidian (Primary BG)
-- `#1C1E24` — Deep Slate (Card BG)
-- `#D4AF37` — Brushed Gold (Accent / CTA)
-- `#C97A56` — Terracotta (Oven Fire / Warm Hover)
-- `#F5F5F0` — Warm Cream (Typography)
+- `#111111` — Rich Obsidian (Primary)
+- `#FCFCFC` — Warm Cream (Text & BG)
+- `#27B5B5` — Teal (Accent / Highlights)
+- `#D4AF37` — Brushed Gold (CTA hover)
 
 **Typography:**
-- **Headings:** Playfair Display (700 italic) — Heritage elegance
-- **Display:** Cinzel Decorative — Awards, accolades
-- **Body / UI:** Plus Jakarta Sans — Crisp, contemporary
-
-**Adaptive Ambience:**
-- **12:00–17:00 SAST:** Daytime mode (brighter)
-- **17:00+:** Candlelight night mode (deeper obsidian, amber gold)
+- **Display/Headings:** Outfit
+- **Body / UI:** Plus Jakarta Sans
 
 ---
 
 ## 📁 Project Structure
 
 ```
-on-sixth-website/
+onsixth-restaurant-redesign/
 ├── app/
-│   ├── layout.tsx              # Root layout + SEO metadata
+│   ├── layout.tsx              # Root layout + SEO metadata + JSON-LD
 │   ├── page.tsx                # Home page
+│   ├── sitemap.ts              # Auto-generated sitemap.xml
 │   ├── menu/page.tsx           # Interactive Digital Menu
 │   ├── experience/page.tsx     # Heritage & Open Kitchen
-│   ├── reservations/page.tsx   # Table Booking
+│   ├── reservations/page.tsx   # Table Booking (WhatsApp)
 │   └── contact/page.tsx        # Contact & Map
 ├── components/
 │   ├── layout/                 # Navbar, Footer
 │   ├── home/                   # ReviewsCarousel, etc.
-│   ├── menu/                   # MenuPageClient (filters, dish grid)
+│   ├── menu/                   # MenuPageClient (hover previews, filters, modals)
 │   ├── reservations/           # Multi-step booking form
-│   └── ui/                     # DayNightController, OpenStatusBadge, ScrollReveal
+│   └── ui/                     # FloatingWidget (chatbot), ScrollReveal, Preloader
 ├── lib/
-│   ├── menu-data.ts            # Full structured menu (TypeScript)
-│   ├── schema.ts               # JSON-LD structured data
+│   ├── chatbot/                # Chatbot intelligence and response logic
+│   ├── menu-data.ts            # Full structured menu with images (TypeScript)
+│   ├── schema.ts               # JSON-LD structured data builders
 │   └── time-utils.ts           # SAST open/closed, WhatsApp URL builder
+├── public/
+│   ├── dishes/                 # AI-generated dish photography
+│   ├── robots.txt              # Search engine crawl rules
+│   └── favicon-logo.png        # Brand logo favicon
 └── styles/
     ├── design-system.css       # Brand tokens, resets, base
     ├── components.css          # Buttons, cards, badges, forms
@@ -132,7 +144,6 @@ cp .env.example .env.local
 
 | Variable | Description |
 |---|---|
-| `NEXT_PUBLIC_MAPBOX_TOKEN` | Mapbox GL JS public token (optional — map uses iframe currently) |
 | `NEXT_PUBLIC_SITE_URL` | Production URL for og: meta tags |
 
 ---
@@ -141,43 +152,48 @@ cp .env.example .env.local
 
 | Route | Page | Description |
 |---|---|---|
-| `/` | Home | Hero, awards strip, culinary trifecta, kitchen theatre, heritage teaser, reviews |
-| `/menu` | Digital Menu | Filterable dish grid, dietary toggles, dish modal with chef notes |
+| `/` | Home | Hero video, awards strip, culinary trifecta, open kitchen, heritage teaser, reviews carousel |
+| `/menu` | Digital Menu | Filterable dish grid, hover image previews, dietary toggles, dish modal with chef notes |
 | `/experience` | Our Story | Mining heritage, open kitchen philosophy, interactive timeline |
 | `/reservations` | Book a Table | Multi-step form → WhatsApp booking confirmation |
 | `/contact` | Find Us | Map, hours, live open/closed badge, one-tap directions |
 
 ---
 
+## 🔍 SEO & AI Visibility
+
+- **JSON-LD Schemas**: Restaurant, Menu, BreadcrumbList
+- **sitemap.xml**: Auto-generated via `app/sitemap.ts`
+- **robots.txt**: Allows all crawlers
+- **Canonical URLs**: Defined on all pages
+- **Geo Meta Tags**: region, placename, coordinates
+- **OpenGraph + Twitter Cards**: On all pages
+- **Google Business Profile**: Integrate via GBP dashboard
+
+---
+
 ## ♿ Accessibility
 
-- WCAG 2.1 AA compliant colour contrast ratios
+- WCAG 2.1 AA compliant colour contrast
 - Skip-to-content link on all pages
-- Keyboard navigable interactive components
+- Keyboard-navigable interactive components (focus traps in modals)
 - ARIA labels on all icons and interactive elements
 - `prefers-reduced-motion` respected
+- `role` and `aria-*` on all form controls
 
 ---
 
-## 📊 Target Lighthouse Scores
+## 📊 Lighthouse Targets
 
-| Metric | Current | Target |
-|---|---|---|
-| Performance | 71 | 98+ |
-| Accessibility | 97 | 98+ |
-| Best Practices | 96 | 100 |
-| SEO | 85 | 97+ |
-| LCP | 3.0s | < 2.5s |
-| CLS | Unknown | < 0.1 |
-
----
-
-## 🏆 Awards & Recognition
-
-- 🏆 Best Upmarket Restaurant — Best of Ekurhuleni
-- 💍 Best Romantic Restaurant — Best of Ekurhuleni  
-- 🏡 Best Neighbourhood Eatery — Best of Ekurhuleni
-- ⭐ 4.8/5 across 1,200+ reviews
+| Metric | Target |
+|---|---|
+| Performance | 95+ |
+| Accessibility | 98+ |
+| Best Practices | 100 |
+| SEO | 100 |
+| LCP | < 2.5s |
+| CLS | < 0.1 |
+| TTFB | < 200ms |
 
 ---
 

@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: 'Reserve a Table',
   description:
     'Book your table at On Sixth Restaurant in Northmead, Benoni. Choose your date, party size and seating preference. Instant WhatsApp confirmation available.',
+  alternates: {
+    canonical: 'https://onsixthrestaurant.co.za/reservations',
+  },
 };
 
 export default function ReservationsPage() {

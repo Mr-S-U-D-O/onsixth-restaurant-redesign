@@ -44,10 +44,12 @@ export function buildRestaurantSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Restaurant',
+    '@id': `${RESTAURANT_INFO.url}/#restaurant`,
     name: RESTAURANT_INFO.name,
     url: RESTAURANT_INFO.url,
     telephone: RESTAURANT_INFO.telephone,
     email: RESTAURANT_INFO.email,
+    description: 'Award-winning upmarket restaurant in Northmead, Benoni. Specialising in artisanal sushi, wood-fired pizzaladière, signature skewers, and handcrafted cocktails in an open kitchen setting.',
     address: {
       '@type': 'PostalAddress',
       ...RESTAURANT_INFO.address,
@@ -80,15 +82,42 @@ export function buildRestaurantSchema() {
     priceRange: RESTAURANT_INFO.priceRange,
     servesCuisine: RESTAURANT_INFO.servesCuisine,
     hasMenu: RESTAURANT_INFO.hasMenu,
+    menu: RESTAURANT_INFO.hasMenu,
     aggregateRating: {
       '@type': 'AggregateRating',
-      ...RESTAURANT_INFO.aggregateRating,
+      ratingValue: RESTAURANT_INFO.aggregateRating.ratingValue,
+      reviewCount: RESTAURANT_INFO.aggregateRating.reviewCount,
+      bestRating: RESTAURANT_INFO.aggregateRating.bestRating,
+      worstRating: 1,
     },
     currenciesAccepted: 'ZAR',
     paymentAccepted: 'Cash, Credit Card, EFT',
     image: `${RESTAURANT_INFO.url}/og-image.jpg`,
+    logo: `${RESTAURANT_INFO.url}/favicon-logo.png`,
+    sameAs: [
+      'https://www.facebook.com/onsixthrestaurant',
+      'https://www.instagram.com/onsixthrestaurant',
+      'https://g.page/onsixthrestaurant',
+    ],
+    potentialAction: {
+      '@type': 'ReserveAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${RESTAURANT_INFO.url}/reservations`,
+        inLanguage: 'en-ZA',
+        actionPlatform: [
+          'http://schema.org/DesktopWebPlatform',
+          'http://schema.org/MobileWebPlatform',
+        ],
+      },
+      result: {
+        '@type': 'Reservation',
+        name: 'Table reservation at On Sixth Restaurant',
+      },
+    },
   };
 }
+
 
 // ── Local Business Schema ──
 export function buildLocalBusinessSchema() {

@@ -7,7 +7,10 @@ import OpenStatusBadge from '@/components/ui/OpenStatusBadge';
 export const metadata: Metadata = {
   title: 'Contact & Location',
   description:
-    'Find On Sixth Restaurant at the Cocoa Bean Centre, Northmead, Benoni. Call +27 11 425 1668 or book via WhatsApp. Open 7 days a week.',
+    'Find On Sixth Restaurant at the Cocoa Bean Centre, Northmead, Benoni. Call +27 11 425 1668 or book via WhatsApp. Open 7 days a week for lunch and dinner.',
+  alternates: {
+    canonical: 'https://onsixthrestaurant.co.za/contact',
+  },
 };
 
 const HOURS_ROWS = [

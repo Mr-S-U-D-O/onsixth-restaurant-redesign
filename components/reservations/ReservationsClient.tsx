@@ -353,7 +353,9 @@ export default function ReservationsClient() {
 
                 <div style={{ display: 'grid', gap: 'var(--space-5)', marginBottom: 'var(--space-8)' }}>
                   <div className="form-group">
-                    <label className="form-label" htmlFor="booking-name" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Full Name</label>
+                    <label className="form-label" htmlFor="booking-name" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>
+                      Full Name <span style={{ color: 'var(--teal)' }} aria-hidden="true">*</span>
+                    </label>
                     <input
                       type="text"
                       id="booking-name"
@@ -361,12 +363,22 @@ export default function ReservationsClient() {
                       placeholder="e.g. Sarah Molefe"
                       value={form.name}
                       onChange={(e) => set('name', e.target.value)}
-                      style={{ width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
+                      required
+                      aria-required="true"
+                      aria-describedby={!form.name.trim() ? 'name-error' : undefined}
+                      style={{ width: '100%', padding: 'var(--space-3)', border: `1px solid ${!form.name.trim() ? 'var(--teal)' : 'var(--border)'}`, borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
                     />
+                    {!form.name.trim() && (
+                      <p id="name-error" role="alert" style={{ color: 'var(--teal)', fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>
+                        Please enter your name to proceed.
+                      </p>
+                    )}
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="booking-phone" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>Phone / WhatsApp</label>
+                    <label className="form-label" htmlFor="booking-phone" style={{ color: 'var(--slate-mid)', fontWeight: 500 }}>
+                      Phone / WhatsApp <span style={{ color: 'var(--teal)' }} aria-hidden="true">*</span>
+                    </label>
                     <input
                       type="tel"
                       id="booking-phone"
@@ -374,8 +386,16 @@ export default function ReservationsClient() {
                       placeholder="+27 82 000 0000"
                       value={form.phone}
                       onChange={(e) => set('phone', e.target.value)}
-                      style={{ width: '100%', padding: 'var(--space-3)', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
+                      required
+                      aria-required="true"
+                      aria-describedby={!form.phone.trim() ? 'phone-error' : undefined}
+                      style={{ width: '100%', padding: 'var(--space-3)', border: `1px solid ${!form.phone.trim() ? 'var(--teal)' : 'var(--border)'}`, borderRadius: '4px', background: 'var(--bg-primary)', color: 'var(--obsidian)' }}
                     />
+                    {!form.phone.trim() && (
+                      <p id="phone-error" role="alert" style={{ color: 'var(--teal)', fontSize: 'var(--text-xs)', marginTop: 'var(--space-1)' }}>
+                        A WhatsApp number is required to confirm your booking.
+                      </p>
+                    )}
                   </div>
 
                   <div className="form-group">
@@ -410,13 +430,15 @@ export default function ReservationsClient() {
                     className="btn btn-primary btn-lg"
                     onClick={() => setStep(4)}
                     style={{ flex: 1, borderRadius: '4px' }}
-                    disabled={!form.name || !form.phone}
+                    disabled={!form.name.trim() || !form.phone.trim()}
+                    aria-disabled={!form.name.trim() || !form.phone.trim()}
                   >
                     Review Booking →
                   </button>
                 </div>
               </div>
             )}
+
 
             {/* ── STEP 4: Confirm ── */}
             {step === 4 && (

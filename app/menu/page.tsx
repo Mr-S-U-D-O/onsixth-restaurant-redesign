@@ -7,9 +7,13 @@ export const metadata: Metadata = {
   title: 'Interactive Digital Menu',
   description:
     'Browse the full On Sixth menu — artisanal sushi & sashimi, oblong wood-fired pizzaladière, signature skewers, mains, desserts & handcrafted cocktails. Filter by vegan, gluten-free and more.',
+  alternates: {
+    canonical: 'https://onsixthrestaurant.co.za/menu',
+  },
   openGraph: {
     title: 'On Sixth Menu | Sushi, Pizza & More',
     description: 'Full interactive menu with dietary filters — no PDFs, no downloads.',
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'On Sixth Restaurant Menu' }],
   },
 };
 

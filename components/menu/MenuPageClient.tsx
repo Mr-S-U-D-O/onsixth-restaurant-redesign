@@ -201,6 +201,9 @@ function HoverImagePreview({ activeItem, mousePos }: { activeItem: MenuItem | nu
   if (!activeItem) return null;
   
   const bgImg = activeItem.image || '/hero_fire_kitchen.jpg';
+  // Offset card so it appears to the right and slightly above the cursor
+  const x = mousePos.x + 16;
+  const y = mousePos.y - 160;
 
   return (
     <motion.div
@@ -211,23 +214,21 @@ function HoverImagePreview({ activeItem, mousePos }: { activeItem: MenuItem | nu
         left: 0,
         pointerEvents: 'none',
         zIndex: 100,
-        width: '260px',
-        height: '320px',
+        width: '240px',
+        height: '300px',
         borderRadius: '8px',
         overflow: 'hidden',
         border: '1px solid var(--border)',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.22)',
-        background: 'var(--obsidian)'
+        boxShadow: '0 16px 40px rgba(0,0,0,0.28)',
+        background: 'var(--obsidian)',
+        // Use CSS transform directly — no spring lag from screen edge
+        transform: `translate(${x}px, ${y}px)`,
       }}
-      animate={{
-        x: mousePos.x + 24,
-        y: mousePos.y - 120,
-        opacity: 1,
-        scale: 1,
-        rotate: ((mousePos.x % 20) - 10) * 0.2
-      }}
-      initial={{ opacity: 0, scale: 0.9 }}
-      transition={{ type: 'spring', damping: 25, stiffness: 280, mass: 0.4 }}
+      key={activeItem.id}
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.94 }}
+      transition={{ duration: 0.18, ease: 'easeOut' }}
     >
       <div 
         style={{
@@ -246,14 +247,14 @@ function HoverImagePreview({ activeItem, mousePos }: { activeItem: MenuItem | nu
             left: 0,
             right: 0,
             padding: 'var(--space-4)',
-            background: 'linear-gradient(to top, rgba(17,17,17,0.92) 0%, rgba(17,17,17,0.4) 60%, transparent 100%)',
+            background: 'linear-gradient(to top, rgba(17,17,17,0.9) 0%, rgba(17,17,17,0.35) 60%, transparent 100%)',
             color: 'var(--cream)'
           }}
         >
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--teal)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', fontWeight: 600 }}>
-            {activeItem.price ? `R${activeItem.price}` : 'Artisanal Selection'}
+            {activeItem.price ? `ZAR ${activeItem.price}` : 'Artisanal Selection'}
           </div>
-          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, fontFamily: 'var(--font-heading)' }}>
+          <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, fontFamily: 'var(--font-heading)', marginTop: '2px' }}>
             {activeItem.name}
           </div>
         </div>
