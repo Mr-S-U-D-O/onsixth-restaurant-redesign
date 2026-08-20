@@ -174,8 +174,9 @@ function DishModal({
 
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 'var(--space-6)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
           {item.price ? (
-            <div style={{ fontSize: 'var(--text-2xl)', color: 'var(--obsidian)', fontVariantNumeric: 'tabular-nums' }}>
-              <span style={{ fontSize: 'var(--text-base)', color: 'var(--slate-mid)', marginRight: 'var(--space-1)' }}>ZAR</span>{formatPrice(item.price)}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', fontSize: 'var(--text-2xl)', color: 'var(--obsidian)', fontVariantNumeric: 'tabular-nums' }}>
+              <span style={{ fontSize: 'var(--text-base)', color: 'var(--slate-mid)' }}>ZAR</span>
+              <span>{formatPrice(item.price)}</span>
             </div>
           ) : item.options ? (
             <div style={{ width: '100%' }}>
@@ -311,8 +312,24 @@ export default function MenuPageClient() {
   // Wait, I can just use 'framer-motion' if it's imported.
   return (
     <div onPointerMove={handlePointerMove}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 1024px) {
+          .menu-sidebar {
+            position: relative !important;
+            top: 0 !important;
+            flex-direction: row !important;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: var(--space-6);
+            margin-bottom: var(--space-6);
+          }
+          .menu-sidebar > div:first-child {
+            width: 100%;
+          }
+        }
+      `}} />
       {/* Editorial Filter Block */}
-      <div className="container" style={{ paddingTop: 'var(--space-20)', paddingBottom: 'var(--space-8)' }}>
+      <div className="container" style={{ paddingTop: 'calc(var(--space-20) + 80px)', paddingBottom: 'var(--space-8)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--space-8)' }}>
            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 0.9, letterSpacing: '-0.02em', color: 'var(--obsidian)', margin: 0 }}>
              Curate<br/>Your <span className="text-highlight">Palate.</span>
@@ -383,7 +400,7 @@ export default function MenuPageClient() {
         <div className="grid-sidebar-responsive">
           
           {/* Sticky Sidebar */}
-          <aside style={{ position: 'sticky', top: '160px', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+          <aside className="menu-sidebar" style={{ position: 'sticky', top: '160px', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             <div style={{ fontSize: 'var(--text-xs)', color: 'var(--slate-mid)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', marginBottom: 'var(--space-4)' }}>Sections</div>
             {filteredCategories.map(cat => (
               <button

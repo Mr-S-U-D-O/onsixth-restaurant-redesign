@@ -245,14 +245,14 @@ export default function ReservationsClient() {
                   />
                 </div>
 
-                <button
-                  className="btn btn-primary btn-lg"
-                  onClick={() => setStep(2)}
-                  disabled={!form.date}
-                  style={{ width: '100%', borderRadius: '4px' }}
-                >
-                  Next: Choose Time &amp; Seating →
-                </button>
+                  <button
+                    className="btn btn-primary btn-lg"
+                    onClick={() => setStep(2)}
+                    disabled={!form.date}
+                    style={{ width: '100%', borderRadius: '4px', whiteSpace: 'normal', height: 'auto', padding: 'var(--space-4)' }}
+                  >
+                    Next: Choose Time &amp; Seating →
+                  </button>
               </div>
             )}
 
@@ -336,7 +336,7 @@ export default function ReservationsClient() {
 
                 <div style={{ display: 'flex', gap: 'var(--space-4)' }}>
                   <button className="btn btn-secondary" onClick={() => setStep(1)} style={{ borderRadius: '4px' }}>← Back</button>
-                  <button className="btn btn-primary btn-lg" onClick={() => setStep(3)} style={{ flex: 1, borderRadius: '4px' }}>
+                  <button className="btn btn-primary btn-lg" onClick={() => setStep(3)} style={{ flex: 1, borderRadius: '4px', whiteSpace: 'normal', height: 'auto', padding: 'var(--space-4)' }}>
                     Next: Your Details →
                   </button>
                 </div>
@@ -429,7 +429,7 @@ export default function ReservationsClient() {
                   <button
                     className="btn btn-primary btn-lg"
                     onClick={() => setStep(4)}
-                    style={{ flex: 1, borderRadius: '4px' }}
+                    style={{ flex: 1, borderRadius: '4px', whiteSpace: 'normal', height: 'auto', padding: 'var(--space-4)' }}
                     disabled={!form.name.trim() || !form.phone.trim()}
                     aria-disabled={!form.name.trim() || !form.phone.trim()}
                   >
@@ -485,10 +485,10 @@ export default function ReservationsClient() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-primary btn-lg"
-                    style={{ justifyContent: 'center', borderRadius: '4px' }}
+                    style={{ justifyContent: 'center', borderRadius: '4px', whiteSpace: 'normal', height: 'auto', padding: 'var(--space-4)', textAlign: 'center' }}
                     onClick={() => setSubmitted(true)}
                   >
-                    <MessageCircle size={20} />
+                    <MessageCircle size={20} style={{ flexShrink: 0 }} />
                     Confirm via WhatsApp (Instant)
                   </a>
 
@@ -518,7 +518,7 @@ export default function ReservationsClient() {
             <span style={{ fontSize: 'var(--text-xs)', textTransform: 'uppercase', letterSpacing: 'var(--tracking-widest)', color: 'var(--slate-mid)', marginBottom: 'var(--space-2)' }}>
               Large Groups
             </span>
-            <h3 className="text-heading-card" style={{ marginBottom: 'var(--space-3)', color: 'var(--obsidian)', fontSize: 'var(--text-2xl)' }}>
+            <h3 className="text-heading-card" style={{ marginBottom: 'var(--space-3)', color: 'var(--obsidian)', fontSize: 'var(--text-2xl)', overflowWrap: 'break-word', wordBreak: 'break-word', hyphens: 'auto' }}>
               Private Functions &amp; Birthdays
             </h3>
             <p className="text-body" style={{ color: 'var(--slate-mid)', marginBottom: 'var(--space-6)', maxWidth: '480px' }}>

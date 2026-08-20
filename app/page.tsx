@@ -108,6 +108,7 @@ function Hero() {
         >
           Where Craft
           <span 
+            className="hero-video-bubble"
             style={{ 
               display: "inline-block", 
               width: "clamp(80px, 15vw, 160px)", 
@@ -138,6 +139,7 @@ function Hero() {
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
+        className="hero-ctas"
         style={{ display: "flex", justifyContent: "flex-end", gap: "var(--space-4)", marginTop: "var(--space-12)" }}
       >
         <MagneticButton>
@@ -156,6 +158,33 @@ function Hero() {
         @media (max-width: 1024px) {
           .text-body {
             text-align: left !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .hero-video-bubble {
+            margin: 0 8px !important;
+          }
+          .hero-ctas {
+            justify-content: flex-start !important;
+            flex-wrap: wrap;
+          }
+        }
+        @media (max-width: 480px) {
+          .hero-video-bubble {
+            width: 70px !important;
+            height: 35px !important;
+            margin: 0 6px !important;
+          }
+          .hero-ctas {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .hero-ctas > * {
+            width: 100%;
+          }
+          .hero-ctas a {
+            width: 100%;
+            justify-content: center;
           }
         }
       `}} />
